@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
-
-const a = 1;
-a = 2;
 </script>
 
 <template>
