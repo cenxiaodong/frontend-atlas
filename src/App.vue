@@ -3,10 +3,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
 
 const a = 1;
-const b = 2;
-function test() {
-  console.log(a + b);
-}
+a = 2;
 </script>
 
 <template>
