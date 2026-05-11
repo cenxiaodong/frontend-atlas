@@ -1,5 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
+// const routerMode = {
+//   hash: () => createWebHashHistory(),
+//   history: () => createWebHistory(),
+// };
+
+// console.log(import.meta.env.VITE_ROUTER_MODE, import.meta.env);
+
+// console.log(routerMode['history']());
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +23,18 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
   ],
-})
+});
 
-export default router
+router.beforeEach(() => {
+  NProgress.start();
+  return true;
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
+
+export default router;
