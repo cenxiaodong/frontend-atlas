@@ -1,6 +1,4 @@
-<script setup lang="ts">
-console.log(a);
-</script>
+<script setup lang="ts"></script>
 <template>
   <div class="">11</div>
 </template>
