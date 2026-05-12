@@ -18,7 +18,8 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
       "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+      "tsc --noEmit"
     ],
     "*.{json,md,css,scss}": [
       "prettier --write"
