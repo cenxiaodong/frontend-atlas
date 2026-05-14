@@ -4,7 +4,6 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 import { staticRouter, errorRouter } from '@/router/modules/staticRouter';
-
 const routerMode = {
   hash: () => createWebHashHistory(),
   history: () => createWebHistory(),

@@ -1,14 +1,9 @@
 // TSConfig for modules that run in Node.js environment via either transpilation or type-stripping.
+
+// 构建配置文件	vite.config.ts、.eslintrc.cjs 等	运行环境Node.js
 {
   "extends": "@tsconfig/node24/tsconfig.json",
-  "include": [
-    "vite.config.*",
-    "vitest.config.*",
-    "cypress.config.*",
-    "playwright.config.*",
-    "eslint.config.*",
-    "src/**/*.d.ts"
-  ],
+  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*", "eslint.config.*", "src/**/*.d.ts"],
   "compilerOptions": {
     // Most tools use transpilation instead of Node.js's native type-stripping.
     // Bundler mode provides a smoother developer experience.

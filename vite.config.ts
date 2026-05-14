@@ -1,15 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig, loadEnv, ConfigEnv, UserConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import vueDevTools from 'vite-plugin-vue-devtools';
-
-// unplugin插件自动生成的类型声明文件
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
 import { wrapperEnv } from './build/getEnv';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-
+import { createVitePlugins } from './build/plugins';
 import pkg from './package.json';
 import dayjs from 'dayjs';
 
@@ -23,16 +15,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd(), '');
   const viteEnv = wrapperEnv(env);
   return {
-    plugins: [
-      vue(),
-      vueDevTools(),
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-    ],
+    plugins: createVitePlugins(viteEnv),
     base: viteEnv.VITE_PUBLIC_PATH,
     server: {
       host: '0.0.0.0', // 确保允许网络访问

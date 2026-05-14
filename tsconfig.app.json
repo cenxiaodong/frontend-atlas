@@ -1,8 +1,12 @@
+// 应用代码	src/ 目录下的 .vue、.tsx、.ts 文件	运行环境浏览器
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.tsx", "src/**/*.jsx"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
+    "jsx": "preserve", // 让 TS 保留 JSX，由插件处理转换
+    "jsxFactory": "h", // JSX 工厂函数（Vue 用 h）
+    "jsxFragmentFactory": "Fragment", // JSX 片段工厂函数
     // Extra safety for array and object lookups, but may have false positives.
     "noUncheckedIndexedAccess": true,
 
