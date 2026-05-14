@@ -10,6 +10,15 @@ import Components from 'unplugin-vue-components/vite';
 import { wrapperEnv } from './build/getEnv';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
+import pkg from './package.json';
+import dayjs from 'dayjs';
+
+const { dependencies, devDependencies, name, version } = pkg;
+const __APP_INFO__ = {
+  pkg: { dependencies, devDependencies, name, version },
+  lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+};
+
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd(), '');
   const viteEnv = wrapperEnv(env);
@@ -37,6 +46,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+    },
+    define: {
+      __APP_INFO__: JSON.stringify(__APP_INFO__),
     },
     build: {
       outDir: 'dist', // 打包产物输出到 dist/ 目录
