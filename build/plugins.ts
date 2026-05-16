@@ -1,5 +1,8 @@
 import { PluginOption } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -15,17 +18,24 @@ import viteCompression from 'vite-plugin-compression';
  * @param viteEnv
  */
 export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
-  const { VITE_APP_TITLE, VITE_DEVTOOLS } = viteEnv;
+  const { VITE_APP_TITLE, VITE_DEVTOOLS, VITE_PWA, VITE_REPORT,VITE_CODEINSPECTOR } = viteEnv;
   return [
     vue(),
     // vue 可以使用 jsx/tsx 语法
     vueJsx(),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
     // Vue 开发者工具（Vue DevTools）直接内置到你的 Vite 开发服务器中
     VITE_DEVTOOLS && vueDevTools({ launchEditor: 'code' }),
     // esLint 报错信息显示在浏览器界面上
     eslintPlugin(),
     // 创建打包压缩配置
     createCompression(viteEnv),
+    // 动态修改 HTML 内容和压缩生产环境的 HTML 代码
     createHtmlPlugin({
       minify: true,
       inject: {
@@ -34,12 +44,15 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
         },
       },
     }),
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
+    // vitePWA
+    VITE_PWA && createVitePwa(viteEnv),
+    // 自动 IDE 并将光标定位到 DOM 对应的源代码位置。see: https://inspector.fe-dev.cn/guide/start.html
+    VITE_CODEINSPECTOR && codeInspectorPlugin({
+      bundler:'vite',
+      editor:'code'
     }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
+    // 是否生成包预览，分析依赖包大小做优化处理
+    VITE_REPORT && (visualizer({ open: false, filename: 'stats.html', gzipSize: true, brotliSize: true }) as PluginOption),
   ];
 };
 
@@ -70,4 +83,49 @@ const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
     );
   }
   return plugins;
+};
+
+/**
+ * @description VitePwa
+ * @param viteEnv
+ */
+const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
+  const { VITE_APP_TITLE } = viteEnv;
+  return VitePWA({
+    registerType: 'autoUpdate',
+    includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+    manifest: {
+      name: VITE_APP_TITLE,
+      short_name: VITE_APP_TITLE,
+      description: '一个面向现代前端工程化的前端基础设施项目。',
+      theme_color: '#ffffff',
+
+      icons: [
+        {
+          src: '/logo.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: '/logo.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+        {
+          src: '/logo.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable',
+        },
+      ],
+    },
+
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+
+    devOptions: {
+      enabled: true,
+    },
+  });
 };

@@ -40,3 +40,5 @@ __screenshots__/
 *.timestamp-*-*.mjs
 components.d.ts
 auto-imports.d.ts
+
+stats.html
