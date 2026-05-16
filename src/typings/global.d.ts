@@ -23,3 +23,5 @@ declare interface ViteEnv {
 interface ImportMetaEnv extends ViteEnv {
   __: unknown;
 }
+//  svg-icons-register
+declare module 'virtual:svg-icons-register';

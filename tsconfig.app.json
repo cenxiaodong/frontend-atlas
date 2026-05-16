@@ -9,12 +9,13 @@
     "jsxFragmentFactory": "Fragment", // JSX 片段工厂函数
     // Extra safety for array and object lookups, but may have false positives.
     "noUncheckedIndexedAccess": true,
+    // TypeScript 5.0+ 引入的一个严格模式，目的是让导入导出的语法更清晰
+    "verbatimModuleSyntax": true,
 
     // Path mapping for cleaner imports.
     "paths": {
       "@/*": ["./src/*"]
     },
-
     // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.
     // Specified here to keep it out of the root directory.
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"

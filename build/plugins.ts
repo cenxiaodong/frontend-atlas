@@ -1,18 +1,20 @@
+import { resolve }from 'path'
 import { PluginOption } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import eslintPlugin from 'vite-plugin-eslint';
+import checker from 'vite-plugin-checker'
 import vueDevTools from 'vite-plugin-vue-devtools';
 // unplugin插件自动生成的类型声明文件
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import viteCompression from 'vite-plugin-compression';
-
 /**
  * 创建 vite 插件
  * @param viteEnv
@@ -32,7 +34,29 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
     // Vue 开发者工具（Vue DevTools）直接内置到你的 Vite 开发服务器中
     VITE_DEVTOOLS && vueDevTools({ launchEditor: 'code' }),
     // esLint 报错信息显示在浏览器界面上
-    eslintPlugin(),
+    checker({
+      // 开启 TypeScript 检查（使用项目根目录的 tsconfig.json）
+      typescript:true,
+       // 开启 ESLint 检查，并指定检查命令和范围
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{ts,tsx,vue,js,jsx}"',
+      },
+        // （可选）如果你的项目有样式规范，可以开启 Stylelint
+      // stylelint: {
+      //   lintCommand: 'stylelint "./src/**/*.{css,scss,vue}"',
+      // },
+      // 控制是否在浏览器上显示错误遮罩层，开发时建议开启
+      overlay: {
+        initialIsOpen: true, // 初始不自动打开，有错误时会在右下角显示一个弹窗
+      },
+    }),
+    // svg 图标
+    createSvgIconsPlugin({
+      // 指定存放 SVG 图标的文件夹路径
+      iconDirs: [resolve(process.cwd(), "src/assets/icons")],
+      // 定义生成 symbol 的 id 格式，[name] 会被替换为文件名
+      symbolId: "icon-[dir]-[name]"
+    }),
     // 创建打包压缩配置
     createCompression(viteEnv),
     // 动态修改 HTML 内容和压缩生产环境的 HTML 代码
