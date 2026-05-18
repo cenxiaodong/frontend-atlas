@@ -1,4 +1,4 @@
-import { CustomAxiosRequestConfig } from '../index';
+import type { CustomAxiosRequestConfig } from '../index';
 import qs from 'qs';
 
 // 声明一个 Map 用于存储每个请求的标识和取消函数
@@ -35,6 +35,8 @@ export class AxiosCanceler {
    */
   removePending(config: CustomAxiosRequestConfig) {
     const url = getPendingUrl(config);
+    console.log(url, pendingMap);
+
     // 如果在 pending 中存在当前请求标识，需要取消当前请求并删除条目
     const controller = pendingMap.get(url);
     if (controller) {

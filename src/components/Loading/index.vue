@@ -8,6 +8,6 @@
 
 <script setup lang="ts" name="Loading"></script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import './index';
 </style>

@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, loadEnv, ConfigEnv, UserConfig } from 'vite';
 import { wrapperEnv } from './build/getEnv';
+import { createProxy } from './build/proxy';
 import { createVitePlugins } from './build/plugins';
 import pkg from './package.json';
 import dayjs from 'dayjs';
@@ -24,6 +25,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       hmr: {
         overlay: true, // 报错时弹出遮罩层
       },
+      proxy: createProxy(viteEnv.VITE_PROXY),
     },
     resolve: {
       alias: {

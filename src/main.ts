@@ -5,6 +5,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/routers/index';
 
+// element css
+import 'element-plus/dist/index.css';
 // svg icons
 import 'virtual:svg-icons-register';
 // reset
