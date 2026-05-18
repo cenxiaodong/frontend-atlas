@@ -1,0 +1,28 @@
+/* base reset */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#app,
+#watermark {
+  width: 100%;
+  height: 100%;
+}
+
+/* better default */
+* {
+  box-sizing: border-box;
+}
+
+/* optional */
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.6;
+}

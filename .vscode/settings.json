@@ -7,8 +7,10 @@
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
+  "stylelint.validate": ["css", "scss", "less", "vue"],
   "eslint.validate": ["javascript", "typescript", "vue"],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"

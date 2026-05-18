@@ -1,17 +1,17 @@
 import './assets/main.css';
 
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
 
 import App from './App.vue';
-import router from './router';
+import router from '@/routers/index';
 
 // svg icons
 import 'virtual:svg-icons-register';
+// reset
+import '@/styles/reset.scss';
+// pinia
+import pinia from './stores';
 
 const app = createApp(App);
 
-app.use(createPinia());
-app.use(router);
-
-app.mount('#app');
+app.use(router).use(pinia).mount('#app');

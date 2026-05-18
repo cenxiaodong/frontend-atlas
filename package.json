@@ -13,7 +13,9 @@
     "lint:oxlint": "oxlint . --fix",
     "lint:eslint": "eslint . --fix --cache",
     "format": "prettier --write --experimental-cli src/",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint:css": "stylelint \"src/**/*.{css,scss,less,vue}\"",
+    "lint:css:fix": "stylelint \"src/**/*.{css,scss,vue}\" --fix"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": [
@@ -30,6 +32,7 @@
     "element-plus": "^2.14.0",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
   },
@@ -53,9 +56,17 @@
     "lint-staged": "^17.0.0",
     "npm-run-all2": "^8.0.4",
     "oxlint": "~1.60.0",
+    "postcss": "^8.5.14",
+    "postcss-html": "^1.8.1",
+    "postcss-scss": "^4.0.9",
     "prettier": "3.8.3",
     "rollup-plugin-visualizer": "^7.0.1",
     "sass": "^1.99.0",
+    "stylelint": "^17.11.1",
+    "stylelint-config-recess-order": "^7.7.0",
+    "stylelint-config-recommended-vue": "^1.6.1",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "terser": "^5.47.1",
     "typescript": "~6.0.0",
     "unplugin-auto-import": "^21.0.0",

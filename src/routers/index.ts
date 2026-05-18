@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
-import { staticRouter, errorRouter } from '@/router/modules/staticRouter';
+import { staticRouter, errorRouter } from '@/routers/modules/staticRouter';
 const routerMode = {
   hash: () => createWebHashHistory(),
   history: () => createWebHistory(),
