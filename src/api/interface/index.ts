@@ -1,3 +1,5 @@
+import type { AxiosRequestConfig } from 'axios';
+import { ContentTypeEnum } from '@/enums/httpEnum';
 // 请求响应参数（不包含data）
 export interface Result {
   code: string;
@@ -89,4 +91,16 @@ export namespace User {
   }
 }
 
-export namespace a {}
+export type ContentType =
+  | 'application/json;charset=UTF-8'
+  | 'text/plain;charset=UTF-8'
+  | 'application/x-www-form-urlencoded;charset=UTF-8'
+  | 'multipart/form-data;charset=UTF-8';
+
+// 定义 axios 请求配置接口
+export interface CustomRequestConfig extends AxiosRequestConfig {
+  loading?: boolean; // 是否显示loading
+  cancel?: boolean; // 是否取消重复请求
+  timeout?: number; // 请求超时时间
+  contentType?: ContentTypeEnum; // 指定请求类型
+}

@@ -3,8 +3,9 @@ import type { AxiosInstance, AxiosError, AxiosRequestConfig, InternalAxiosReques
 import { showFullScreenLoading, tryHideFullScreenLoading } from '@/components/Loading/fullScreen';
 import { LOGIN_URL } from '@/config';
 import { ElMessage } from 'element-plus';
-import type { ResultData } from '@/api/interface';
+import type { ResultData, CustomRequestConfig } from '@/api/interface';
 import { ResultEnum } from '@/enums/httpEnum';
+import { ContentTypeEnum } from '@/enums/httpEnum';
 import { checkStatus } from './helper/checkStatus';
 import { AxiosCanceler } from './helper/axiosCancel';
 import { useUserStore } from '@/stores/modules/user';
@@ -22,6 +23,9 @@ const config = {
   timeout: ResultEnum.TIMEOUT as number,
   // 跨域时候允许携带凭证
   withCredentials: true,
+  headers: {
+    'Content-Type': ContentTypeEnum.JSON,
+  },
 };
 
 const axiosCanceler = new AxiosCanceler();
@@ -46,8 +50,11 @@ class RequestHttp {
         // 当前请求不需要显示 loading，在 api 服务中通过指定的第三个参数: { loading: false } 来控制
         config.loading ??= true;
         config.loading && showFullScreenLoading();
+
         if (config.headers && typeof config.headers.set === 'function') {
           config.headers.set('x-access-token', userStore.token);
+        } else {
+          config.headers['x-access-token'] = userStore.token;
         }
         return config;
       },
@@ -63,7 +70,6 @@ class RequestHttp {
     this.service.interceptors.response.use(
       (response: AxiosResponse & { config: CustomAxiosRequestConfig }) => {
         const { data, config } = response;
-
         const userStore = useUserStore();
         axiosCanceler.removePending(config);
         config.loading && tryHideFullScreenLoading();
@@ -100,10 +106,10 @@ class RequestHttp {
   /**
    * @description 常用请求方法封装
    */
-  get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
+  get<T>(url: string, params?: object, _object?: CustomRequestConfig): Promise<ResultData<T>> {
     return this.service.get(url, { params, ..._object });
   }
-  post<T>(url: string, params?: object | string, _object = {}): Promise<ResultData<T>> {
+  post<T>(url: string, params?: object | string, _object?: CustomRequestConfig): Promise<ResultData<T>> {
     return this.service.post(url, params, _object);
   }
   put<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
