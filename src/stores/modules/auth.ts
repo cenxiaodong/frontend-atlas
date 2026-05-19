@@ -25,12 +25,12 @@ export const useAuthStore = defineStore('atlas-auth', {
     breadcrumbListGet: (state) => getAllBreadcrumbList(state.authMenuList),
   },
   actions: {
-    // Get AuthButtonList
+    // 获取按钮权限列表
     async getAuthButtonList() {
       const { data } = await getAuthButtonListApi();
       this.authButtonList = data;
     },
-    // Get AuthMenuList
+    // 获取菜单列表
     async getAuthMenuList() {
       const { data } = await getAuthMenuListApi();
       this.authMenuList = data;
