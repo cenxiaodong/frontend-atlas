@@ -35,11 +35,8 @@ export class AxiosCanceler {
    */
   removePending(config: CustomAxiosRequestConfig) {
     const url = getPendingUrl(config);
-    console.log(url, pendingMap);
-
     // 如果在 pending 中存在当前请求标识，需要取消当前请求并删除条目
     const controller = pendingMap.get(url);
-    console.log(controller);
 
     if (controller) {
       controller.abort();

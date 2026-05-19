@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/modules/user';
-import { getUserList } from '@/api/modules/user';
+import { getMenuList } from '@/api/modules/user';
 
 const userStore = useUserStore();
 // import { ref } from 'vue';
@@ -26,12 +26,12 @@ const userStore = useUserStore();
 // ];
 
 const getUser = () => {
-  getUserList({ pageNum: 1, pageSize: 20, username: '', idCard: '', gender: 1, email: '', address: '', createTime: [], status: 1 }).then((res) => {
-    console.log(res.code);
+  getMenuList().then((res) => {
+    console.log(res.data);
   });
 };
 
-userStore.setToken('djkfjdhudhfudhfudhufh ');
+userStore.setToken('bqddxxwqmfncffacvbpkuxvwvqrhln');
 </script>
 
 <template>

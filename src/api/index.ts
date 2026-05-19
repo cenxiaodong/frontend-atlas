@@ -14,6 +14,7 @@ import router from '@/routers';
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   loading?: boolean;
   cancel?: boolean;
+  contentType?: ContentTypeEnum;
 }
 
 const config = {
@@ -33,7 +34,6 @@ const axiosCanceler = new AxiosCanceler();
 class RequestHttp {
   service: AxiosInstance;
   public constructor(config: AxiosRequestConfig) {
-    // instantiation
     this.service = axios.create(config);
 
     /**
@@ -50,6 +50,14 @@ class RequestHttp {
         // 当前请求不需要显示 loading，在 api 服务中通过指定的第三个参数: { loading: false } 来控制
         config.loading ??= true;
         config.loading && showFullScreenLoading();
+        // 动态设置 Content-Type
+        if (config.contentType) {
+          if (config.headers && typeof config.headers.set === 'function') {
+            config.headers.set('Content-Type', config.contentType);
+          } else {
+            config.headers['Content-Type'] = config.contentType;
+          }
+        }
 
         if (config.headers && typeof config.headers.set === 'function') {
           config.headers.set('x-access-token', userStore.token);
