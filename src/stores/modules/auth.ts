@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('atlas-auth', {
       const { data } = await getAuthMenuListApi();
       this.authMenuList = data;
     },
-    // Set RouteName
+    // 记录当前访问路由名
     async setRouteName(name: string) {
       this.routeName = name;
     },

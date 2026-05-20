@@ -17,6 +17,13 @@ module.exports = {
     'color-function-notation': null, // 不强制 rgb/rgba 新语法
     'alpha-value-notation': null, //不强制透明度写百分比
     'custom-property-empty-line-before': null,
+    // 禁止使用未知的伪类选择器
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['global', 'v-deep', 'deep'],
+      },
+    ],
   },
   // 忽略检查的文件
   ignoreFiles: ['**/node_modules/**', '**/dist/**', '**/public/**', '**/*.js', '**/*.ts', '**/*.json'],

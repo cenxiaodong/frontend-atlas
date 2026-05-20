@@ -27,6 +27,7 @@
     ]
   },
   "dependencies": {
+    "@vueuse/core": "^14.3.0",
     "axios": "^1.16.0",
     "dayjs": "^1.11.20",
     "element-plus": "^2.14.0",

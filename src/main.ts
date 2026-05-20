@@ -7,6 +7,8 @@ import router from '@/routers/index';
 
 // element css
 import 'element-plus/dist/index.css';
+// element dark css
+import 'element-plus/theme-chalk/dark/css-vars.css';
 // svg icons
 import 'virtual:svg-icons-register';
 // reset
