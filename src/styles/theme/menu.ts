@@ -2,7 +2,7 @@ import type { Theme } from '@/hooks/interface';
 
 export const menuTheme: Record<Theme.ThemeType, { [key: string]: string }> = {
   light: {
-    '--el-menu-bg-color': '#00dc6c',
+    '--el-menu-bg-color': '#fff',
     '--el-menu-hover-bg-color': '#cccccc',
     '--el-menu-active-bg-color': 'var(--el-color-primary-light-9)',
     '--el-menu-text-color': '#333333',

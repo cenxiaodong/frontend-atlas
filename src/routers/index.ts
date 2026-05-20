@@ -3,10 +3,11 @@ import { useAuthStore } from '@/stores/modules/auth';
 import { useUserStore } from '@/stores/modules/user';
 import { initDynamicRouter } from '@/routers/modules/dynamicRouter';
 import { LOGIN_URL, ROUTER_WHITE_LIST } from '@/config/index';
+import { staticRouter, errorRouter } from '@/routers/modules/staticRouter';
+
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
-import { staticRouter, errorRouter } from '@/routers/modules/staticRouter';
 const routerMode = {
   hash: () => createWebHashHistory(),
   history: () => createWebHistory(),
@@ -55,13 +56,20 @@ router.beforeEach(async (to, from) => {
 
   // 存储 routerName 做按钮权限筛选
   authStore.setRouteName(to.name as string);
-
   // 正常访问页面
   return true;
 });
 
 router.afterEach(() => {
   NProgress.done();
+});
+
+/**
+ * @description 路由跳转错误
+ * */
+router.onError((error) => {
+  NProgress.done();
+  console.warn('路由错误', error.message);
 });
 
 /**
