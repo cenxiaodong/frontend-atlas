@@ -1,5 +1,5 @@
 <template>
-  <svg :style="finalStyle" aria-hidden="true">
+  <svg class="svg-icon" :style="finalStyle" aria-hidden="true">
     <use :href="symbolId" :xlink:href="symbolId" />
   </svg>
 </template>
@@ -24,7 +24,8 @@ interface SvgProps {
 
 const props = withDefaults(defineProps<SvgProps>(), {
   prefix: 'icon',
-  size: '50px',
+  size: '30px',
+  color: 'currentColor',
   iconStyle: () => ({}),
 });
 
@@ -50,10 +51,19 @@ const finalStyle = computed<CSSProperties>(() => {
     height = props.size;
   }
 
-  return {
+  const style: CSSProperties = {
     width,
     height,
-    ...props.iconStyle, // 自定义样式优先级最高
+    fill: props.color,
   };
+  return { ...style, ...props.iconStyle };
 });
 </script>
+
+<style lang="scss">
+.svg-icon {
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+}
+</style>
