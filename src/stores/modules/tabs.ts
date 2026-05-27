@@ -17,6 +17,8 @@ export const useTabsStore = defineStore('atlas-tabs', {
       if (this.tabsMenuList.every((item: TabsMenuProps) => item.path !== tabItem.path)) {
         this.tabsMenuList.push(tabItem);
       }
+      console.log(tabItem);
+
       // add keepalive
       if (!keepAliveStore.keepAliveName.includes(tabItem.name) && tabItem.isKeepAlive) {
         keepAliveStore.addKeepAliveName(tabItem.path);

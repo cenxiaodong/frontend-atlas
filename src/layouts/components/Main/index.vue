@@ -3,14 +3,14 @@
   <!-- <Maximize v-show="maximize" /> -->
   <Tabs v-show="tabs" />
   <el-main>
-    <router-view></router-view>
-    <!-- <router-view v-slot="{ Component, route }">
+    {{ keepAliveName }}
+    <router-view v-slot="{ Component, route }">
       <transition appear name="fade-transform" mode="out-in">
         <keep-alive :include="keepAliveName">
           <component :is="createComponentWrapper(Component, route)" v-if="isRouterShow" :key="route.fullPath" />
         </keep-alive>
       </transition>
-    </router-view> -->
+    </router-view>
   </el-main>
   <!-- <el-footer v-show="footer">
     <Footer />
@@ -18,24 +18,25 @@
 </template>
 
 <script setup lang="ts">
-// import { ref, onBeforeUnmount, provide, watch, h } from 'vue';
+import { ref, onBeforeUnmount, provide, watch, h } from 'vue';
 import { storeToRefs } from 'pinia';
-// import { useDebounceFn } from '@vueuse/core';
+import { useDebounceFn } from '@vueuse/core';
 import { useGlobalStore } from '@/stores/modules/global';
-// import { useKeepAliveStore } from '@/stores/modules/keepAlive';
+import { useKeepAliveStore } from '@/stores/modules/keepAlive';
 // import Maximize from './components/Maximize.vue';
 import Tabs from '@/layouts/components/Tabs/index.vue';
 
 const globalStore = useGlobalStore();
 
-const { tabs } = storeToRefs(globalStore);
 // import Footer from '@/layouts/components/Footer/index.vue';
 
-/*const globalStore = useGlobalStore();
-const { maximize, isCollapse, layout, tabs, footer } = storeToRefs(globalStore);
+// footer
+const { maximize, isCollapse, layout, tabs } = storeToRefs(globalStore);
 
 const keepAliveStore = useKeepAliveStore();
 const { keepAliveName } = storeToRefs(keepAliveStore);
+
+console.log(keepAliveName.value);
 
 // 注入刷新页面方法
 const isRouterShow = ref(true);
@@ -86,7 +87,7 @@ const listeningWindow = useDebounceFn(() => {
 window.addEventListener('resize', listeningWindow, false);
 onBeforeUnmount(() => {
   window.removeEventListener('resize', listeningWindow);
-});*/
+});
 </script>
 
 <style scoped lang="scss">
