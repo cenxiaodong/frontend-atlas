@@ -1,10 +1,10 @@
 <template>
   <el-dropdown trigger="click" :teleported="false">
     <div class="more-button">
-      <i :class="'iconfont icon-xiala'"></i>
+      <SvgIcon name="setting" size="21px" />
     </div>
     <template #dropdown>
-      <!-- <el-dropdown-menu>
+      <el-dropdown-menu>
         <el-dropdown-item @click="refresh">
           <el-icon><Refresh /></el-icon>{{ $t('tabs.refresh') }}
         </el-dropdown-item>
@@ -26,13 +26,13 @@
         <el-dropdown-item @click="closeAllTab">
           <el-icon><FolderDelete /></el-icon>{{ $t('tabs.closeAll') }}
         </el-dropdown-item>
-      </el-dropdown-menu> -->
+      </el-dropdown-menu>
     </template>
   </el-dropdown>
 </template>
 
 <script setup lang="ts">
-/*import { inject, nextTick } from 'vue';
+import { inject, nextTick } from 'vue';
 import { HOME_URL } from '@/config';
 import { useTabsStore } from '@/stores/modules/tabs';
 import { useGlobalStore } from '@/stores/modules/global';
@@ -46,14 +46,14 @@ const globalStore = useGlobalStore();
 const keepAliveStore = useKeepAliveStore();
 
 // refresh current page
-const refreshCurrentPage: Function = inject('refresh') as Function;
+const refreshCurrentPage = inject<(flag: boolean) => void>('refresh');
 const refresh = () => {
   setTimeout(() => {
     route.meta.isKeepAlive && keepAliveStore.removeKeepAliveName(route.fullPath as string);
-    refreshCurrentPage(false);
+    refreshCurrentPage?.(false);
     nextTick(() => {
       route.meta.isKeepAlive && keepAliveStore.addKeepAliveName(route.fullPath as string);
-      refreshCurrentPage(true);
+      refreshCurrentPage?.(true);
     });
   }, 0);
 };
@@ -73,7 +73,7 @@ const closeCurrentTab = () => {
 const closeAllTab = () => {
   tabStore.closeMultipleTab();
   router.push(HOME_URL);
-};*/
+};
 </script>
 
 <style scoped lang="scss">

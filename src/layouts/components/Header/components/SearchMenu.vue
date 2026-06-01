@@ -1,6 +1,6 @@
 <template>
   <div class="search-menu">
-    <i :class="'iconfont icon-sousuo'" class="toolBar-icon" @click="handleOpen"></i>
+    <SvgIcon name="sousuo" size="21px" @click="handleOpen" />
     <el-dialog class="search-dialog" v-model="isShowSearch" :width="600" :show-close="false" top="10vh">
       <el-input v-model="searchMenu" ref="menuInputRef" placeholder="菜单搜索：支持菜单名称、路径" size="large" clearable :prefix-icon="Search" />
       <div v-if="searchList.length" class="menu-list" ref="menuListRef">
@@ -73,7 +73,8 @@ const updateSearchList = () => {
           !item.meta?.isHide,
       )
     : [];
-  activePath.value = searchList.value.length ? searchList.value[0].path : '';
+  const firstMenu = searchList.value[0];
+  activePath.value = firstMenu?.path || '';
 };
 
 const debouncedUpdateSearchList = useDebounceFn(updateSearchList, 300);
@@ -86,7 +87,9 @@ const keyPressUpOrDown = (direction: number) => {
   if (length === 0) return;
   const index = searchList.value.findIndex((item) => item.path === activePath.value);
   const newIndex = (index + direction + length) % length;
-  activePath.value = searchList.value[newIndex].path;
+  const target = searchList.value[newIndex];
+  if (!target) return;
+  activePath.value = target.path;
   nextTick(() => {
     if (!menuListRef.value?.firstElementChild) return;
     const menuItemHeight = menuListRef.value.firstElementChild.clientHeight + 12 || 0;
@@ -119,6 +122,9 @@ const handleClickMenu = () => {
 
 <style scoped lang="scss">
 .search-menu {
+  display: flex;
+  align-items: center;
+
   :deep(.el-dialog) {
     border-radius: 4px;
 

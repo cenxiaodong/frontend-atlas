@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click" @command="changeLanguage">
-    <SvgIcon name="buju" size="21px" />
+    <SvgIcon name="zhongyingwen" size="21px" />
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item v-for="item in languageList" :key="item.value" :command="item.value" :disabled="language === item.value">
@@ -12,12 +12,12 @@
 </template>
 
 <script setup lang="ts">
-// import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
 import { useGlobalStore } from '@/stores/modules/global';
-// import { LanguageType } from "@/stores/interface";
+import type { LanguageType } from '@/stores/interface';
 
-// const i18n = useI18n();
+const i18n = useI18n();
 const globalStore = useGlobalStore();
 const language = computed(() => globalStore.language);
 
@@ -27,9 +27,7 @@ const languageList = [
 ];
 
 const changeLanguage = (lang: string) => {
-  console.log(lang);
-
-  /*  i18n.locale.value = lang;
-  globalStore.setGlobalState('language', lang as LanguageType);*/
+  i18n.locale.value = lang;
+  globalStore.setGlobalState('language', lang as LanguageType);
 };
 </script>

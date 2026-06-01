@@ -7,6 +7,8 @@ import router from '@/routers/index';
 import { registerGlobalComponents } from '@/components/global/index';
 // common css
 import '@/styles/common.scss';
+// custom element css
+import '@/styles/element.scss';
 // element css
 import 'element-plus/dist/index.css';
 // element dark css
@@ -19,6 +21,8 @@ import 'virtual:svg-icons-register';
 import '@/styles/reset.scss';
 // pinia
 import pinia from './stores';
+// vue i18n
+import I18n from '@/languages/index';
 
 const app = createApp(App);
 
@@ -31,4 +35,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
-app.use(router).use(pinia).mount('#app');
+app.use(router).use(pinia).use(I18n).mount('#app');

@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click" @command="setAssemblySize">
-    <SvgIcon name="buju" size="21px" />
+    <SvgIcon name="content-right" size="21px" />
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item v-for="item in assemblySizeList" :key="item.value" :command="item.value" :disabled="assemblySize === item.value">

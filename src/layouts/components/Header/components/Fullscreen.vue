@@ -1,7 +1,5 @@
 <template>
-  <div class="fullscreen">
-    <i :class="['iconfont', isFullscreen ? 'icon-suoxiao' : 'icon-fangda']" class="toolBar-icon" @click="handleFullScreen"></i>
-  </div>
+  <SvgIcon :name="isFullscreen ? 'suoxiao' : 'fangda'" size="19px" @click="handleFullScreen" />
 </template>
 
 <script setup lang="ts">

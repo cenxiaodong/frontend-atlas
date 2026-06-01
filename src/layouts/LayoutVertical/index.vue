@@ -18,16 +18,18 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
 <template>
   <el-container class="layout">
     <el-aside>
-      <div class="aside-box" :style="{ width: isCollapse ? '65px' : '210px' }">
-        <div class="logo flx-center">
-          <!-- <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" /> -->
-          <span v-show="!isCollapse" class="logo-text">测试</span>
+      <div class="aside-fixed-wrapper">
+        <div class="aside-box" :style="{ width: isCollapse ? '65px' : '210px' }">
+          <div class="logo flx-center">
+            <!-- <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" /> -->
+            <span v-show="!isCollapse" class="logo-text">测试</span>
+          </div>
+          <el-scrollbar>
+            <el-menu :router="false" :default-active="activeMenu" :collapse="isCollapse" :unique-opened="true" :collapse-transition="false">
+              <SubMenu :menu-list="menuList" />
+            </el-menu>
+          </el-scrollbar>
         </div>
-        <el-scrollbar>
-          <el-menu :router="false" :default-active="activeMenu" :collapse="isCollapse" :unique-opened="true" :collapse-transition="false">
-            <SubMenu :menu-list="menuList" />
-          </el-menu>
-        </el-scrollbar>
       </div>
     </el-aside>
     <el-container>
@@ -83,6 +85,20 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
         }
       }
     }
+  }
+
+  .aside-fixed-wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    display: inline-block;
+    transition: width 2s;
+  }
+
+  .aside-fixed {
+    border: 1px solid red;
   }
 
   .el-header {

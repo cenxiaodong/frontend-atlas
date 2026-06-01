@@ -54,7 +54,7 @@ const finalStyle = computed<CSSProperties>(() => {
   const style: CSSProperties = {
     width,
     height,
-    fill: props.color,
+    color: props.color,
   };
   return { ...style, ...props.iconStyle };
 });
