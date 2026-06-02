@@ -19,6 +19,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
   <el-container class="layout">
     <el-aside>
       <div class="aside-fixed-wrapper">
+        {{ isCollapse }}
         <div class="aside-box" :style="{ width: isCollapse ? '65px' : '210px' }">
           <div class="logo flx-center">
             <!-- <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" /> -->
@@ -32,7 +33,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
         </div>
       </div>
     </el-aside>
-    <el-container>
+    <el-container :style="{ marginLeft: isCollapse ? '65px' : '210px' }">
       <el-header>
         <ToolBarLeft />
         <ToolBarRight />
