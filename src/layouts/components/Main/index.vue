@@ -1,6 +1,5 @@
 <template>
   <Maximize v-show="maximize" />
-  <Tabs v-show="tabs" />
   <el-main>
     {{ keepAliveName }}
     <router-view v-slot="{ Component, route }">
@@ -11,7 +10,7 @@
       </transition>
     </router-view>
   </el-main>
-  <!-- <el-footer v-show="footer">
+  <!--<el-footer v-show="footer">
     <Footer />
   </el-footer>-->
 </template>
@@ -24,14 +23,12 @@ import { useDebounceFn } from '@vueuse/core';
 import { useGlobalStore } from '@/stores/modules/global';
 import { useKeepAliveStore } from '@/stores/modules/keepAlive';
 import Maximize from './components/Maximize.vue';
-import Tabs from '@/layouts/components/Tabs/index.vue';
 
 const globalStore = useGlobalStore();
 
 // import Footer from '@/layouts/components/Footer/index.vue';
 
-// footer
-const { maximize, isCollapse, layout, tabs } = storeToRefs(globalStore);
+const { maximize, isCollapse, layout } = storeToRefs(globalStore);
 
 const keepAliveStore = useKeepAliveStore();
 const { keepAliveName } = storeToRefs(keepAliveStore);
@@ -95,5 +92,15 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-// @import './index';
+.el-main {
+  box-sizing: border-box;
+  padding: 10px 12px;
+  overflow-x: hidden;
+  background-color: var(--el-bg-color-page);
+}
+
+.el-footer {
+  height: auto;
+  padding: 0;
+}
 </style>

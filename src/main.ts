@@ -5,14 +5,15 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/routers/index';
 import { registerGlobalComponents } from '@/components/global/index';
-// common css
-import '@/styles/common.scss';
-// custom element css
-import '@/styles/element.scss';
 // element css
 import 'element-plus/dist/index.css';
 // element dark css
 import 'element-plus/theme-chalk/dark/css-vars.css';
+
+// common css
+import '@/styles/common.scss';
+// custom element css
+import '@/styles/element.scss';
 // element icons
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 // svg icons
