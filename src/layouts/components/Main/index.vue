@@ -1,7 +1,7 @@
 <template>
   <Maximize v-show="maximize" />
   <el-main>
-    {{ keepAliveName }}
+    <!-- {{ keepAliveName }} -->
     <router-view v-slot="{ Component, route }">
       <transition appear name="fade-transform" mode="out-in">
         <keep-alive :include="keepAliveName">
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import type { RouteLocationNormalized } from 'vue-router';
-import { ref, onBeforeUnmount, provide, watch, h, type Component } from 'vue';
+import { ref, onBeforeUnmount, watch, h, type Component } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useDebounceFn } from '@vueuse/core';
 import { useGlobalStore } from '@/stores/modules/global';
@@ -26,19 +26,16 @@ import Maximize from './components/Maximize.vue';
 
 const globalStore = useGlobalStore();
 
+defineProps<{
+  isRouterShow: boolean;
+}>();
+
 // import Footer from '@/layouts/components/Footer/index.vue';
 
 const { maximize, isCollapse, layout } = storeToRefs(globalStore);
 
 const keepAliveStore = useKeepAliveStore();
 const { keepAliveName } = storeToRefs(keepAliveStore);
-
-console.log(keepAliveName.value);
-
-// 注入刷新页面方法
-const isRouterShow = ref(true);
-const refreshCurrentPage = (val: boolean) => (isRouterShow.value = val);
-provide('refresh', refreshCurrentPage);
 
 // 解决详情页 keep-alive 问题
 const wrapperMap = new Map();
@@ -59,9 +56,6 @@ watch(
   () => maximize!.value,
   () => {
     const app = document.getElementById('app') as HTMLElement;
-
-    console.log(maximize!.value, 'watch maximize');
-
     if (maximize!.value) app.classList.add('main-maximize');
     else app.classList.remove('main-maximize');
   },
@@ -82,8 +76,18 @@ watch(
 const screenWidth = ref(0);
 const listeningWindow = useDebounceFn(() => {
   screenWidth.value = document.body.clientWidth;
-  if (!isCollapse!.value && screenWidth.value < 1200) globalStore.setGlobalState('isCollapse', true);
-  if (isCollapse!.value && screenWidth.value > 1200) globalStore.setGlobalState('isCollapse', false);
+  console.log(screenWidth.value);
+
+  if (!isCollapse!.value && screenWidth.value < 1200) {
+    globalStore.setGlobalState('isCollapse', true);
+    globalStore.setGlobalState('isHideCollapse', false);
+  }
+  if (isCollapse!.value && screenWidth.value > 1200) {
+    globalStore.setGlobalState('isCollapse', false);
+    globalStore.setGlobalState('isHideCollapse', false);
+  }
+
+  if (isCollapse!.value && screenWidth.value < 750) globalStore.setGlobalState('isHideCollapse', true);
 }, 100);
 window.addEventListener('resize', listeningWindow, false);
 onBeforeUnmount(() => {

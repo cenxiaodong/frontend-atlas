@@ -5,12 +5,16 @@
 
 /* 当前页面最大化 css */
 .main-maximize {
-  .aside-split,
   .el-aside,
   .el-header,
   .el-footer,
   .tabs-box {
     display: none !important;
+  }
+
+  .main-contaniner {
+    padding-top: 0 !important;
+    margin-left: 0 !important;
   }
 }
 

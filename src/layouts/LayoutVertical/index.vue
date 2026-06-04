@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, provide, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from '@/stores/modules/auth';
 import { useGlobalStore } from '@/stores/modules/global';
@@ -8,21 +8,45 @@ import Tabs from '@/layouts/components/Tabs/index.vue';
 import ToolBarLeft from '@/layouts/components/Header/ToolBarLeft.vue';
 import ToolBarRight from '@/layouts/components/Header/ToolBarRight.vue';
 import SubMenu from '@/layouts/components/Menu/SubMenu.vue';
+
+const isRouterShow = ref(true);
+const isDrawerVisible = ref(false); // 移动端抽屉显示状态
+const refreshCurrentPage = (val: boolean) => (isRouterShow.value = val);
+provide('refresh', refreshCurrentPage);
+
+const SIDEBAR_WIDTH = {
+  expanded: '210px',
+  collapsed: '65px',
+};
 const route = useRoute();
 const authStore = useAuthStore();
 const globalStore = useGlobalStore();
 
 const isCollapse = computed(() => globalStore.isCollapse);
+const isHideCollapse = computed(() => globalStore.isHideCollapse);
 
 const tabs = computed(() => globalStore.tabs);
 
 const menuList = computed(() => authStore.showMenuListGet);
 
 const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu : route.path) as string);
+const asideWidth = computed(() => {
+  // 移动端且抽屉显示时，宽度为 expanded
+  if (isHideCollapse.value && isDrawerVisible.value) {
+    return SIDEBAR_WIDTH.expanded;
+  }
+  // 移动端且抽屉隐藏时，宽度为0
+  if (isHideCollapse.value && !isDrawerVisible.value) {
+    return '0px';
+  }
+  return isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded;
+});
+const mainMarginLeft = computed(() => (isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded));
+const headerWidth = computed(() => `calc(100% - ${isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded})`);
 </script>
 <template>
   <el-container class="layout">
-    <el-aside :style="{ width: isCollapse ? '65px' : '210px' }">
+    <el-aside :style="{ width: asideWidth }">
       <div class="aside-box">
         <div class="logo flx-center">
           <!-- <!~~ <img class="logo-img" src="@/assets/images/logo.svg" alt="logo" /> ~~> -->
@@ -32,21 +56,21 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
           <el-menu :router="false" :default-active="activeMenu" :collapse="isCollapse" :unique-opened="true" :collapse-transition="false">
             <SubMenu :menu-list="menuList" />
           </el-menu>
-          <div style="height: 2000px"></div>
+          <!-- <div style="height: 2000px"></div> -->
         </el-scrollbar>
       </div>
     </el-aside>
-    <el-container :style="{ marginLeft: isCollapse ? '65px' : '210px' }" style="padding-top: 95px">
-      <div class="header-fixed-wrapper" :style="{ width: isCollapse ? 'calc(100% - 65px)' : 'calc(100% - 210px)' }">
-        <el-header>
-          <div class="header-toolbar">
-            <ToolBarLeft />
-            <ToolBarRight />
-          </div>
-          <Tabs v-show="tabs" />
-        </el-header>
-      </div>
-      <Main />
+    <el-container class="main-contaniner" :style="{ marginLeft: mainMarginLeft }" style="padding-top: 95px">
+      <!-- <div class="header-fixed-wrapper" > -->
+      <el-header :style="{ width: headerWidth }">
+        <div class="header-toolbar">
+          <ToolBarLeft />
+          <ToolBarRight />
+        </div>
+        <Tabs v-show="tabs" />
+      </el-header>
+      <!-- </div> -->
+      <Main :is-router-show="isRouterShow" />
     </el-container>
   </el-container>
 </template>
@@ -106,21 +130,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
 
   :deep(.el-container) {
     background-color: var(--el-bg-color-page);
-    transition: margin-left 0.3s ease;
-  }
-
-  .fixed-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 99;
-    box-sizing: border-box;
-    width: calc(100% - 65px);
-    height: 95px;
-    padding: 0;
-    background-color: var(--el-header-bg-color);
-    border-bottom: 1px solid var(--el-header-border-color);
-    transition: width 0.3s;
+    transition: all 0.3s ease;
   }
 
   .aside-fixed-wrapper {
@@ -146,16 +156,17 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
     transition: width 0.3s;
   }
 
-  .aside-fixed {
-    border: 1px solid red;
-  }
-
   .el-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
     box-sizing: border-box;
     height: 95px;
     padding: 0;
     background-color: var(--el-header-bg-color);
     border-bottom: 1px solid var(--el-header-border-color);
+    transition: width 0.3s;
 
     .header-toolbar {
       display: flex;
@@ -163,6 +174,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
       justify-content: space-between;
       height: 55px;
       padding: 0 15px;
+      border-bottom: 1px solid var(--el-header-border-color);
     }
   }
 }

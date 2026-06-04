@@ -28,6 +28,8 @@ export const useGlobalStore = defineStore('atlas-global', {
     headerInverted: false,
     // 折叠菜单
     isCollapse: false,
+    // 是否隐藏菜单
+    isHideCollapse: false,
     // 菜单手风琴
     accordion: true,
     // 页面水印
