@@ -1,4 +1,5 @@
 import type { PersistenceOptions } from 'pinia-plugin-persistedstate';
+import type { PersistConfig } from '@/stores/interface/index';
 
 /**
  * @description pinia 持久化参数配置
@@ -8,10 +9,10 @@ import type { PersistenceOptions } from 'pinia-plugin-persistedstate';
  * @param {Array} omit 除了这些字段，其他全部保存
  * @return persist
  * */
-const piniaPersistConfig = (key: string, pick?: string[], omit?: string[]) => {
+const piniaPersistConfig = ({ key, storage = localStorage, pick, omit }: PersistConfig) => {
   const persist: PersistenceOptions = {
     key,
-    storage: localStorage,
+    storage,
     pick,
     omit,
   };

@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click" @command="changeLanguage">
-    <SvgIcon name="zhongyingwen" size="21px" />
+    <SvgIcon name="zhongyingwen" size="17px" />
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item v-for="item in languageList" :key="item.value" :command="item.value" :disabled="language === item.value">

@@ -17,7 +17,7 @@ export interface GlobalState {
   asideInverted: boolean;
   headerInverted: boolean;
   isCollapse: boolean;
-  isHideCollapse: boolean;
+  isMobileMenuOpen: boolean;
   accordion: boolean;
   watermark: boolean;
   breadcrumb: boolean;
@@ -60,4 +60,12 @@ export interface AuthState {
 /* KeepAliveState */
 export interface KeepAliveState {
   keepAliveName: string[];
+}
+
+/* piniaPersistConfig */
+export interface PersistConfig {
+  key: string;
+  storage?: Storage;
+  pick?: string[];
+  omit?: string[];
 }

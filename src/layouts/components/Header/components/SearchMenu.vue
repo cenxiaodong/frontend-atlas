@@ -1,6 +1,6 @@
 <template>
   <div class="search-menu">
-    <SvgIcon name="sousuo" size="21px" @click="handleOpen" />
+    <SvgIcon name="sousuo" size="17px" @click="handleOpen" />
     <el-dialog class="search-dialog" v-model="isShowSearch" :width="600" :show-close="false" top="10vh">
       <el-input v-model="searchMenu" ref="menuInputRef" placeholder="菜单搜索：支持菜单名称、路径" size="large" clearable :prefix-icon="Search" />
       <div v-if="searchList.length" class="menu-list" ref="menuListRef">

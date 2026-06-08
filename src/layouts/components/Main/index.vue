@@ -17,9 +17,8 @@
 
 <script setup lang="ts">
 import type { RouteLocationNormalized } from 'vue-router';
-import { ref, onBeforeUnmount, watch, h, type Component } from 'vue';
+import { watch, h, type Component } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useDebounceFn } from '@vueuse/core';
 import { useGlobalStore } from '@/stores/modules/global';
 import { useKeepAliveStore } from '@/stores/modules/keepAlive';
 import Maximize from './components/Maximize.vue';
@@ -32,7 +31,7 @@ defineProps<{
 
 // import Footer from '@/layouts/components/Footer/index.vue';
 
-const { maximize, isCollapse, layout } = storeToRefs(globalStore);
+const { maximize, layout } = storeToRefs(globalStore);
 
 const keepAliveStore = useKeepAliveStore();
 const { keepAliveName } = storeToRefs(keepAliveStore);
@@ -71,28 +70,6 @@ watch(
   },
   { immediate: true },
 );
-
-// 监听窗口大小变化，折叠侧边栏
-const screenWidth = ref(0);
-const listeningWindow = useDebounceFn(() => {
-  screenWidth.value = document.body.clientWidth;
-  console.log(screenWidth.value);
-
-  if (!isCollapse!.value && screenWidth.value < 1200) {
-    globalStore.setGlobalState('isCollapse', true);
-    globalStore.setGlobalState('isHideCollapse', false);
-  }
-  if (isCollapse!.value && screenWidth.value > 1200) {
-    globalStore.setGlobalState('isCollapse', false);
-    globalStore.setGlobalState('isHideCollapse', false);
-  }
-
-  if (isCollapse!.value && screenWidth.value < 750) globalStore.setGlobalState('isHideCollapse', true);
-}, 100);
-window.addEventListener('resize', listeningWindow, false);
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', listeningWindow);
-});
 </script>
 
 <style scoped lang="scss">

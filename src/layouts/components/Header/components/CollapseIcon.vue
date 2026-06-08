@@ -5,10 +5,17 @@
 </template>
 
 <script setup lang="ts">
+import { inject } from 'vue';
 import { useGlobalStore } from '@/stores/modules/global';
 
 const globalStore = useGlobalStore();
-const changeCollapse = () => globalStore.setGlobalState('isCollapse', !globalStore.isCollapse);
+
+const toggleSidebar = inject<(() => void) | null>('toggleSidebar', null);
+const changeCollapse = () => {
+  if (toggleSidebar) {
+    toggleSidebar();
+  }
+};
 </script>
 
 <style scoped lang="scss">

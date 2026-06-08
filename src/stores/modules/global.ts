@@ -28,8 +28,8 @@ export const useGlobalStore = defineStore('atlas-global', {
     headerInverted: false,
     // 折叠菜单
     isCollapse: false,
-    // 是否隐藏菜单
-    isHideCollapse: false,
+    // 移动端菜单是否打开
+    isMobileMenuOpen: false,
     // 菜单手风琴
     accordion: true,
     // 页面水印
@@ -54,5 +54,5 @@ export const useGlobalStore = defineStore('atlas-global', {
       });
     },
   },
-  persist: piniaPersistConfig('atlas-global'),
+  persist: piniaPersistConfig({ key: 'atlas-global', omit: ['isMobileMenuOpen'] }),
 });

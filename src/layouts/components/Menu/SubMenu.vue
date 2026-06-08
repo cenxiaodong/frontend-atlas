@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import { useRouter } from 'vue-router';
+import { isMobile } from '@/utils/is/device';
 
 defineProps<{ menuList: Menu.MenuOptions[] }>();
 
 const router = useRouter();
+
+const toggleSidebar = inject<(() => void) | null>('toggleSidebar', null);
+
 const handleClickMenu = (subItem: Menu.MenuOptions) => {
   if (subItem.meta.isLink) return window.open(subItem.meta.isLink, '_blank');
   router.push(subItem.path);
+  if (isMobile() && toggleSidebar) {
+    toggleSidebar();
+  }
 };
 </script>
 <template>

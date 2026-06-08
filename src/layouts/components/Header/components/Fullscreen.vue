@@ -1,5 +1,5 @@
 <template>
-  <SvgIcon :name="isFullscreen ? 'suoxiao' : 'fangda'" size="19px" @click="handleFullScreen" />
+  <SvgIcon :name="isFullscreen ? 'suoxiao' : 'fangda'" size="17px" @click="handleFullScreen" />
 </template>
 
 <script setup lang="ts">

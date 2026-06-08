@@ -71,5 +71,5 @@ export const useTabsStore = defineStore('atlas-tabs', {
       });
     },
   },
-  persist: piniaPersistConfig('atlas-tabs'),
+  persist: piniaPersistConfig({ key: 'atlas-tabs' }),
 });
