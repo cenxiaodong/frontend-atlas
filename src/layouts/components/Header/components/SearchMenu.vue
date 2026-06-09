@@ -1,7 +1,9 @@
 <template>
   <div class="search-menu">
     <SvgIcon name="sousuo" size="17px" @click="handleOpen" />
-    <el-dialog class="search-dialog" v-model="isShowSearch" :width="600" :show-close="false" top="10vh">
+    <!-- append-to-body="body" -->
+
+    <el-dialog class="search-dialog" v-model="isShowSearch" :width="globalStore.device === 'mobile' ? '85vw' : '40vw'" :show-close="false" top="10vh">
       <el-input v-model="searchMenu" ref="menuInputRef" placeholder="菜单搜索：支持菜单名称、路径" size="large" clearable :prefix-icon="Search" />
       <div v-if="searchList.length" class="menu-list" ref="menuListRef">
         <div
@@ -32,9 +34,11 @@ import { Search } from '@element-plus/icons-vue';
 import { useAuthStore } from '@/stores/modules/auth';
 import { useRouter } from 'vue-router';
 import { useDebounceFn } from '@vueuse/core';
+import { useGlobalStore } from '@/stores/modules/global';
 
 const router = useRouter();
 const authStore = useAuthStore();
+const globalStore = useGlobalStore();
 const menuList = computed(() => authStore.flatMenuListGet.filter((item) => !item.meta.isHide));
 
 const activePath = ref('');
@@ -120,7 +124,7 @@ const handleClickMenu = () => {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .search-menu {
   display: flex;
   align-items: center;

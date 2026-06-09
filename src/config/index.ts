@@ -18,3 +18,6 @@ export const AMAP_MAP_KEY: string = '';
 
 // 百度地图 key
 export const BAIDU_MAP_KEY: string = '';
+
+// 移动端屏幕宽度
+export const MOBILE_WIDTH: number = 768;

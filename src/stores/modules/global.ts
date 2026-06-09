@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { GlobalState } from '@/stores/interface';
-import { DEFAULT_PRIMARY } from '@/config';
+import { DEFAULT_PRIMARY, MOBILE_WIDTH } from '@/config';
 import piniaPersistConfig from '@/stores/helper/persist';
 
 export const useGlobalStore = defineStore('atlas-global', {
@@ -44,6 +44,8 @@ export const useGlobalStore = defineStore('atlas-global', {
     tabsIcon: true,
     // 页脚
     footer: true,
+    // 设备类型
+    device: window.innerWidth <= MOBILE_WIDTH ? 'mobile' : 'pc',
   }),
   getters: {},
   actions: {

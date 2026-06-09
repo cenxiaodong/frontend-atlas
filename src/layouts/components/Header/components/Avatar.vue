@@ -66,8 +66,9 @@ const openDialog = (ref: string) => {
 
 <style scoped lang="scss">
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
+  margin-left: 21px;
   overflow: hidden;
   cursor: pointer;
   border-radius: 50%;

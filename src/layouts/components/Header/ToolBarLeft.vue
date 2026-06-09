@@ -1,12 +1,11 @@
 <template>
   <div class="tool-bar-lf">
     <CollapseIcon id="collapseIcon" />
-    <Breadcrumb v-show="globalStore.breadcrumb && !isMobile()" id="breadcrumb" />
+    <Breadcrumb v-show="globalStore.breadcrumb && globalStore.device != 'mobile'" id="breadcrumb" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { isMobile } from '@/utils/is/device';
 import { useGlobalStore } from '@/stores/modules/global';
 import CollapseIcon from './components/CollapseIcon.vue';
 import Breadcrumb from './components/Breadcrumb.vue';

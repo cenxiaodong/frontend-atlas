@@ -14,14 +14,12 @@
       <Message id="message" />
        -->
     </div>
-    <span class="username">{{ username }}</span>
+    <!-- <span class="username">{{ username }}</span> -->
     <Avatar />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useUserStore } from '@/stores/modules/user';
 import AssemblySize from './components/AssemblySize.vue';
 import Language from './components/Language.vue';
 import Fullscreen from './components/Fullscreen.vue';
@@ -29,9 +27,6 @@ import SearchMenu from './components/SearchMenu.vue';
 // import ThemeSetting from './components/ThemeSetting.vue';
 // import Message from './components/Message.vue';
 import Avatar from './components/Avatar.vue';
-
-const userStore = useUserStore();
-const username = computed(() => userStore.userInfo.name);
 </script>
 
 <style scoped lang="scss">
@@ -39,7 +34,6 @@ const username = computed(() => userStore.userInfo.name);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-right: 25px;
 
   .header-icon {
     display: flex;

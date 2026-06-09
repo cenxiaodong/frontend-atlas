@@ -1,7 +1,7 @@
 <template>
   <el-dropdown trigger="click" :teleported="false">
     <div class="more-button">
-      <SvgIcon name="setting" size="21px" />
+      <SvgIcon name="setting" size="19px" />
     </div>
     <template #dropdown>
       <el-dropdown-menu>

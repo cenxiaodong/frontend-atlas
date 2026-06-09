@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, provide, ref, onBeforeUnmount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { MOBILE_WIDTH } from '@/config';
 import { useDebounceFn } from '@vueuse/core';
 import { useAuthStore } from '@/stores/modules/auth';
 import { useGlobalStore } from '@/stores/modules/global';
@@ -12,7 +13,7 @@ import SubMenu from '@/layouts/components/Menu/SubMenu.vue';
 
 // ==================== 常量 ====================
 const SIDEBAR_WIDTH = { expanded: '210px', collapsed: '65px' } as const;
-const BREAKPOINTS = { mobile: 768, collapse: 1200 } as const;
+const BREAKPOINTS = { mobile: MOBILE_WIDTH, collapse: 1200 } as const;
 
 // ==================== 响应式状态 ====================
 const route = useRoute();
@@ -20,12 +21,11 @@ const authStore = useAuthStore();
 const globalStore = useGlobalStore();
 
 const screenWidth = ref(window.innerWidth);
-const device = ref<'mobile' | 'pc'>(window.innerWidth <= BREAKPOINTS.mobile ? 'mobile' : 'pc');
 const isMobileMenuOpen = ref(false);
 const isRouterShow = ref(true);
 
 // ==================== 计算属性 ====================
-const isMobileDevice = computed(() => device.value === 'mobile');
+const device = computed(() => globalStore.device);
 const isCollapse = computed(() => globalStore.isCollapse);
 
 const menuList = computed(() => authStore.showMenuListGet);
@@ -35,27 +35,26 @@ const tabs = computed(() => globalStore.tabs);
 /** 侧边栏始终用展开宽度渲染，移动端通过 CSS transform 控制显隐 */
 const asideWidth = computed(() => {
   // 移动端：始终展开宽度，显隐由 CSS transform 控制
-  if (isMobileDevice.value) return '0px';
-  // PC 端：跟随折叠状态
+  if (device.value == 'mobile') return '0px';
   return isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded;
 });
 
 /** 主内容区左边距：移动端为 0（菜单浮层覆盖），PC 端跟随折叠状态 */
 const mainMarginLeft = computed(() => {
-  if (isMobileDevice.value) return '0px';
+  if (device.value == 'mobile') return '0px';
   return isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded;
 });
 
 /** 顶部 Header 宽度 */
 const headerWidth = computed(() => {
-  if (isMobileDevice.value) return '100%';
+  if (device.value == 'mobile') return '100%';
   return `calc(100% - ${isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded})`;
 });
 
 // ==================== 方法 ====================
 /** 切换侧边栏：移动端 → 浮层开关；PC 端 → 折叠/展开 */
 const toggleSidebar = () => {
-  if (isMobileDevice.value) {
+  if (device.value == 'mobile') {
     isMobileMenuOpen.value = !isMobileMenuOpen.value;
   } else {
     globalStore.setGlobalState('isCollapse', !globalStore.isCollapse);
@@ -67,8 +66,7 @@ const handleResize = () => {
   screenWidth.value = window.innerWidth;
   const isMobile = screenWidth.value <= BREAKPOINTS.mobile;
 
-  device.value = isMobile ? 'mobile' : 'pc';
-
+  globalStore.setGlobalState('device', isMobile ? 'mobile' : 'pc');
   if (isMobile) {
     isMobileMenuOpen.value = false;
     return;
@@ -139,7 +137,7 @@ provide('toggleSidebar', toggleSidebar);
 
   <!-- 移动端遮罩层 -->
   <Transition name="fade">
-    <div v-if="isMobileDevice && isMobileMenuOpen" class="drawer-bg" @click="isMobileMenuOpen = false" />
+    <div v-if="device == 'mobile' && isMobileMenuOpen" class="drawer-bg" @click="isMobileMenuOpen = false" />
   </Transition>
 </template>
 
@@ -166,7 +164,7 @@ provide('toggleSidebar', toggleSidebar);
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 99;
     display: inline-block;
     width: auto;
     height: 100%;
@@ -221,7 +219,7 @@ provide('toggleSidebar', toggleSidebar);
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 99;
+    z-index: 20;
     box-sizing: border-box;
     height: 95px;
     padding: 0;
@@ -260,7 +258,7 @@ provide('toggleSidebar', toggleSidebar);
 .drawer-bg {
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 80;
   background: #000;
   opacity: 0.4;
 }
