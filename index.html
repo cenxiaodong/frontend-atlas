@@ -5,9 +5,121 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
+    <style>
+      /* 开屏页：应用 JS 未加载时先由这里内联渲染，挂载后由 SplashScreen 组件控制淡出移除 */
+      #app-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(160deg, #e8f7f2 0%, #f7fbf9 55%, #dcefee 100%);
+        transition:
+          opacity 0.5s ease,
+          visibility 0.5s ease;
+      }
+
+      #app-splash.splash-hide {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .splash-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        user-select: none;
+      }
+
+      .splash-logo {
+        width: 104px;
+        height: 104px;
+        border-radius: 24px;
+        object-fit: cover;
+        box-shadow:
+          0 12px 32px rgba(0, 150, 136, 0.22),
+          0 2px 8px rgba(0, 150, 136, 0.12);
+        animation: splash-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .splash-loading {
+        display: flex;
+        gap: 10px;
+        margin-top: 32px;
+      }
+
+      .splash-loading i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #009688;
+        opacity: 0.4;
+        animation: splash-bounce 1s ease-in-out infinite;
+      }
+
+      .splash-loading i:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+
+      .splash-loading i:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+
+      .splash-skip {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        padding: 6px 18px;
+        font-size: 13px;
+        color: #009688;
+        border: 1px solid rgba(0, 150, 136, 0.45);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.65);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .splash-skip:hover {
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0, 150, 136, 0.18);
+      }
+
+      @keyframes splash-pop {
+        from {
+          transform: scale(0.6);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes splash-bounce {
+        0%,
+        80%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        40% {
+          transform: translateY(-10px);
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
+    <!-- <div id="app-splash">
+      <div class="splash-inner">
+        <img class="splash-logo" src="/logo.png" alt="Frontend-Atlas" />
+        <div class="splash-loading"><i></i><i></i><i></i></div>
+      </div>
+      <div class="splash-skip" id="splash-skip">跳过</div>
+    </div> -->
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -38,6 +38,7 @@ userStore.setToken('bqddxxwqmfncffacvbpkuxvwvqrhln');
   <el-config-provider :locale="locale" :size="assemblySize">
     <router-view></router-view>
   </el-config-provider>
+  <!-- <SplashScreen /> -->
 </template>
 
 <style lang="scss"></style>
