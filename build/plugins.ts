@@ -123,20 +123,25 @@ const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
       short_name: VITE_APP_TITLE,
       description: '一个面向现代前端工程化的前端基础设施项目。',
       theme_color: '#ffffff',
-
+      /**
+       * PWA启动时的显示模式  
+       * fullscreen 满整个屏幕，并隐藏状态栏和导航栏
+       * standalone
+      */
+      display: 'fullscreen', 
       icons: [
         {
-          src: '/logo.png',
+          src: '/logo-192.png',
           sizes: '192x192',
           type: 'image/png',
         },
         {
-          src: '/logo.png',
+          src: '/logo-512.png',
           sizes: '512x512',
           type: 'image/png',
         },
         {
-          src: '/logo.png',
+          src: '/logo-512.png',
           sizes: '512x512',
           type: 'image/png',
           purpose: 'any maskable',

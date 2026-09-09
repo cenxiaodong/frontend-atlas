@@ -106,7 +106,8 @@ provide('toggleSidebar', toggleSidebar);
     <el-aside :style="{ width: asideWidth }">
       <div class="aside-box">
         <div class="logo flx-center">
-          <span class="logo-text">测试</span>
+          <img src="/logo.svg" class="logo-img" alt="logo" />
+          <span v-show="!isCollapse" class="logo-text">前端图鉴</span>
         </div>
         <el-scrollbar>
           <el-menu
@@ -130,7 +131,6 @@ provide('toggleSidebar', toggleSidebar);
         </div>
         <Tabs v-show="tabs" />
       </el-header>
-      {{ asideWidth }}{{ isCollapse }}
       <Main :is-router-show="isRouterShow" />
     </el-container>
   </el-container>

@@ -14,5 +14,6 @@
   "stylelint.validate": ["css", "scss", "less", "vue"],
   "eslint.validate": ["javascript", "typescript", "vue"],
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "liveServer.settings.port": 5501
 }

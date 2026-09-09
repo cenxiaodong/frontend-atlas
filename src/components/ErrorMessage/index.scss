@@ -1,0 +1,88 @@
+/* ===== 错误页通用样式(403/404/500 共用) ===== */
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 48px 24px;
+  background: var(--el-bg-color-page, #f2f3f5);
+
+  // 内嵌(非整屏)场景：跟随父容器高度
+  &.is-embed {
+    min-height: 100%;
+  }
+
+  .error-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 70px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .error-img {
+    max-width: min(420px, 80vw);
+    max-height: 300px;
+    object-fit: contain;
+  }
+
+  .error-detail {
+    display: flex;
+    flex-direction: column;
+    max-width: 560px;
+  }
+
+  .error-code {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--el-text-color-primary);
+  }
+
+  .error-desc {
+    margin: 20px 0 0;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.7;
+    color: var(--el-text-color-regular);
+  }
+
+  .error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+}
+
+@media (max-width: 768px) {
+  .error-container {
+    padding: 40px 20px;
+
+    .error-box {
+      flex-direction: column;
+      gap: 34px;
+      text-align: center;
+    }
+
+    .error-img {
+      max-height: 220px;
+    }
+
+    .error-code {
+      font-size: 48px;
+    }
+
+    .error-desc {
+      font-size: 16px;
+    }
+
+    .error-actions {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+}

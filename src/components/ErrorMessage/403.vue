@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts" name="403">
+import ErrorMessage from './index.vue';
+</script>
+
 <template>
-  <div class=""></div>
+  <ErrorMessage code="403" />
 </template>
-<style lang="scss" scoped></style>

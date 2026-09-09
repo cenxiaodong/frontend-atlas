@@ -4,6 +4,7 @@ import piniaPersistConfig from '@/stores/helper/persist';
 
 export const useUserStore = defineStore('atlas-user', {
   state: (): UserState => ({
+    //bqddxxwqmfncffacvbpkuxvwvqrhln
     token: '',
     userInfo: { name: 'Geeker' },
   }),

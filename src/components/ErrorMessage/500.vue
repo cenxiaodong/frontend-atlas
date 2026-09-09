@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts" name="500">
+import ErrorMessage from './index.vue';
+</script>
+
 <template>
-  <div class=""></div>
+  <ErrorMessage code="500" />
 </template>
-<style lang="scss" scoped></style>

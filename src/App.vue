@@ -3,13 +3,11 @@ import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { getBrowserLang } from '@/utils';
 import { useTheme } from '@/hooks/useTheme';
-import { useUserStore } from '@/stores/modules/user';
 import { useGlobalStore } from '@/stores/modules/global';
 import type { LanguageType } from './stores/interface';
 import en from 'element-plus/es/locale/lang/en';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 
-const userStore = useUserStore();
 const globalStore = useGlobalStore();
 const assemblySize = computed(() => globalStore.assemblySize);
 
@@ -30,8 +28,6 @@ const locale = computed(() => {
   if (globalStore.language == 'en') return en;
   return getBrowserLang() == 'zh' ? zhCn : en;
 });
-
-userStore.setToken('bqddxxwqmfncffacvbpkuxvwvqrhln');
 </script>
 
 <template>
