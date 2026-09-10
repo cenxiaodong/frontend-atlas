@@ -47,3 +47,14 @@ interface ImportMetaEnv extends ViteEnv {
 }
 //  svg-icons-register
 declare module 'virtual:svg-icons-register';
+
+/* __APP_INFO__ */
+declare const __APP_INFO__: {
+  pkg: {
+    name: string;
+    version: string;
+    dependencies: Recordable<string>;
+    devDependencies: Recordable<string>;
+  };
+  lastBuildTime: string;
+};

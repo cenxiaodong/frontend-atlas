@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { inject, onMounted } from 'vue';
+import { inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { isMobile } from '@/utils/is/device';
 
-const a = defineProps<{ menuList: Menu.MenuOptions[] }>();
+defineProps<{ menuList: Menu.MenuOptions[] }>();
 
 const router = useRouter();
 
@@ -16,10 +16,6 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
     toggleSidebar();
   }
 };
-
-onMounted(() => {
-  console.log(a.menuList, 'menuList');
-});
 </script>
 <template>
   <template v-for="subItem in menuList" :key="subItem.path">

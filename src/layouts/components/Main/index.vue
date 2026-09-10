@@ -70,7 +70,6 @@ function createComponentWrapper(component: Component, route: RouteLocationNormal
   if (!component) return;
   const wrapperName = route.fullPath;
   let wrapper = wrapperMap.get(wrapperName);
-
   if (!wrapper) {
     wrapper = { name: wrapperName, render: () => h(component) };
     wrapperMap.set(wrapperName, wrapper);

@@ -1,331 +1,106 @@
-# Frontend Atlas
+# Frontend Atlas · 前端图鉴
 
-> 企业级前端能力沉淀平台  
-> 一个面向现代前端工程化的前端基础设施项目。
-
----
+> 把平时觉得好用的前端能力，收进一个随手可查的后台里。
 
 <p align="center">
-  <img src="./public/logo.png" width="160" />
+  <img src="./public/logo.png" width="140" alt="Frontend Atlas" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Vue-3.x-42b883" />
-  <img src="https://img.shields.io/badge/Vite-5.x-646cff" />
-  <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6" />
-  <img src="https://img.shields.io/badge/ESLint-9.x-4B32C3" />
-  <img src="https://img.shields.io/badge/License-MIT-green" />
+  <img src="https://img.shields.io/badge/Vue-3.5-42b883" />
+  <img src="https://img.shields.io/badge/Vite-8-646cff" />
+  <img src="https://img.shields.io/badge/TypeScript-6-3178c6" />
+  <img src="https://img.shields.io/badge/Element%20Plus-2.14-409eff" />
+  <img src="https://img.shields.io/badge/Pinia-3-ffd859" />
 </p>
 
----
+## 这是什么
 
-# ✨ 项目简介
+Frontend Atlas（前端图鉴）是一个**个人自用**的前端知识 / 能力整合项目：把日常反复用到的工程能力（权限、请求、主题、图标、错误页、PWA……）沉淀成一套开箱即用的后台底座，同时把脚手架、通用组件和踩坑记录集中整理，需要时随手就能查到。
 
-Frontend Atlas 并不是一个简单的“功能集合 Demo”。
+## 为什么要做
 
-它更像是：
+- **自用优先**：平时自己觉得好用的功能，就直接整合进来，不用再到处翻代码片段。
+- **一处沉淀**：权限方案、请求封装、主题体系、常用 Hooks 与组件，统一放在一个地方维护和演进。
+- **保持更新**：始终基于较新的技术栈，顺便把新学到的东西在项目里实践一遍。
 
-```txt
-一个企业级前端能力体系仓库
-```
+## 功能概览
 
-目标是将现代前端开发中常见、复杂、可复用的能力：
+- **登录**：品牌化登录页，含登录 / 注册 / 重置密码界面
+- **权限**：动态路由注册 + 菜单级、按钮级权限控制（当前使用本地 JSON 模拟菜单数据）
+- **请求**：Axios 二次封装，支持重复请求取消、全屏 Loading、Token 注入、统一错误码处理
+- **主题**：主题色可切换（与 Element CSS 变量联动）、暗黑模式、灰色 / 弱色模式、侧边栏与顶栏反色
+- **布局**：纵向布局 + 顶部工具栏 + 多标签页
+- **组件与 Hooks**：SVG 图标、开屏 SplashScreen、统一错误页（403 / 404 / 500）、文件下载、表格与操作封装等
+- **国际化**：内置 vue-i18n，语言包集中在 `src/languages`
+- **PWA**：manifest + Service Worker，通过 `.env` 中的 `VITE_PWA` 开关
+- **工程化**：提交前自动检查与格式化，Commit Message 规范校验
 
-- 登录体系
-- 权限体系
-- 请求体系
-- UI 体系
-- 工程体系
-- 插件体系
+## 技术栈
 
-逐步沉淀为：
+| 分类     | 方案                                                      |
+| -------- | --------------------------------------------------------- |
+| 框架     | Vue 3.5 + TypeScript 6                                    |
+| 构建     | Vite 8                                                    |
+| UI       | Element Plus 2.14                                         |
+| 状态     | Pinia 3（配合持久化插件）                                 |
+| 路由     | Vue Router 5（静态路由 + 动态路由）                       |
+| 请求     | Axios                                                     |
+| 样式     | Sass / SCSS + Element CSS 变量                            |
+| 国际化   | vue-i18n 11                                               |
+| 常用库   | VueUse、dayjs、nprogress、screenfull、sortablejs、qs      |
+| 代码质量 | ESLint 10 + oxlint + stylelint + Prettier 3               |
+| 提交规范 | Husky + lint-staged + commitlint                          |
+| 构建插件 | vite-plugin-pwa / svg-icons / compression / visualizer 等 |
+| 包管理   | pnpm（Node `^20.19.0 \|\| >=22.12.0`）                    |
 
-```txt
-可复用
-可扩展
-可维护
-可演进
-```
-
-的现代前端基础设施。
-
----
-
-# 🚀 核心能力
-
-## 🔐 登录体系
-
-支持：
-
-- 账号密码登录
-- 二维码登录
-- Chrome 登录
-- OAuth 登录
-- Token 自动刷新
-- 多端会话管理
-
----
-
-## 🛡 权限体系
-
-支持：
-
-- 动态路由
-- RBAC 权限控制
-- 按钮权限
-- 页面权限
-- 菜单权限
-- 路由守卫
-
----
-
-## 🌐 请求体系
-
-支持：
-
-- Axios 二次封装
-- 请求拦截器
-- 响应拦截器
-- Token 自动处理
-- 请求取消
-- 全局错误处理
-- 请求重试机制
-
----
-
-## 🎨 UI 体系
-
-支持：
-
-- 全局弹窗
-- Toast 提示
-- Loading 管理
-- 主题切换
-- 暗黑模式
-- 动画体系
-
----
-
-## ⚙ 工程体系
-
-内置：
-
-- ESLint 9 Flat Config
-- Prettier
-- Husky
-- lint-staged
-- Commitlint
-- Git Hooks
-- Node 多版本管理
-
-实现：
-
-```txt
-自动代码检查
-自动格式化
-自动提交审查
-统一代码规范
-```
-
----
-
-# 🧱 技术栈
-
-| 模块         | 技术方案   |
-| ------------ | ---------- |
-| 前端框架     | Vue 3      |
-| 构建工具     | Vite       |
-| 开发语言     | TypeScript |
-| 状态管理     | Pinia      |
-| 路由         | Vue Router |
-| 网络请求     | Axios      |
-| CSS 预处理器 | Less       |
-| 代码检查     | ESLint 9   |
-| 代码格式化   | Prettier   |
-| Git Hooks    | Husky      |
-| Commit 规范  | Commitlint |
-| 包管理器     | pnpm       |
-
----
-
-# 📦 项目结构
-
-```txt
-frontend-atlas/
-│
-├── src/
-│   ├── api/             # 请求层
-│   ├── assets/          # 静态资源
-│   ├── components/      # 公共组件
-│   ├── composables/     # 组合式逻辑
-│   ├── constants/       # 常量
-│   ├── directives/      # 指令
-│   ├── hooks/           # hooks
-│   ├── layouts/         # 布局系统
-│   ├── router/          # 路由系统
-│   ├── stores/          # Pinia
-│   ├── styles/          # 全局样式
-│   ├── types/           # TS 类型
-│   ├── utils/           # 工具函数
-│   └── views/           # 页面
-│
-├── .husky/
-├── .vscode/
-├── eslint.config.js
-├── commitlint.config.cjs
-├── vite.config.ts
-└── package.json
-```
-
----
-
-# 🛠 项目启动
-
-## 安装依赖
+## 快速开始
 
 ```bash
 pnpm install
+
+pnpm dev          # 开发模式，默认 http://localhost:5555
+pnpm build        # 类型检查 + 生产构建，输出到 dist
+pnpm preview      # 本地预览构建产物，默认 http://localhost:4173
 ```
 
----
-
-## 启动项目
+其他常用脚本：
 
 ```bash
-pnpm dev
+pnpm type-check   # vue-tsc 类型检查
+pnpm lint         # oxlint + eslint
+pnpm lint:css     # stylelint 样式检查
+pnpm format       # prettier 格式化
 ```
 
----
+环境变量位于 `.env` / `.env.development` / `.env.production`：接口地址 `VITE_API_URL`（开发环境通过 `VITE_PROXY` 代理到 mock）、站点标题 `VITE_APP_TITLE`、端口 `VITE_PORT`、PWA 开关 `VITE_PWA`。
 
-## 项目打包
-
-```bash
-pnpm build
-```
-
----
-
-# 🧹 工程规范
-
-## ESLint
-
-```bash
-pnpm eslint .
-```
-
----
-
-## Prettier
-
-```bash
-pnpm format
-```
-
----
-
-## Git 提交审查
-
-项目集成：
-
-- Husky
-- lint-staged
-- Commitlint
-
-实现：
+## 目录结构
 
 ```txt
-提交前自动检查
-提交前自动格式化
-Commit Message 规范校验
+frontend-atlas/
+├── build/            # Vite 插件与构建配置
+├── public/           # 静态资源（logo、favicon、PWA 图标）
+├── scripts/          # 图标生成脚本（SVG -> PNG / ICO）
+└── src/
+    ├── api/          # 请求封装与接口定义
+    ├── assets/       # 图片、图标、JSON 数据
+    ├── components/   # 公共组件
+    ├── config/       # 全局常量与默认配置
+    ├── enums/        # 枚举
+    ├── hooks/        # 组合式函数
+    ├── languages/    # i18n 语言包
+    ├── layouts/      # 布局系统
+    ├── routers/      # 路由与守卫
+    ├── stores/       # Pinia 状态
+    ├── styles/       # 全局样式与主题
+    ├── typings/      # 类型声明
+    ├── utils/        # 工具函数
+    └── views/        # 页面
 ```
 
----
+## 说明
 
-# 📝 Commit 规范
-
-```bash
-feat: 新增登录模块
-fix: 修复权限问题
-refactor: 重构请求逻辑
-docs: 更新 README
-```
-
----
-
-# 🧠 项目理念
-
-Frontend Atlas 更关注：
-
-```txt
-工程化
-架构化
-可维护性
-可扩展性
-```
-
-而不是：
-
-```txt
-简单功能演示页面
-```
-
----
-
-# 🎯 Roadmap
-
-## 第一阶段
-
-- 登录体系
-- 权限体系
-- 请求体系
-- 工程规范体系
-
----
-
-## 第二阶段
-
-- 插件系统
-- 动态布局
-- 国际化
-- 主题系统
-
----
-
-## 第三阶段
-
-- 微前端
-- Monorepo
-- 可视化配置
-- 低代码平台
-
----
-
-# 📌 开发原则
-
-- 单一职责
-- 逻辑复用
-- 统一请求层
-- 类型安全
-- 严格 Git 工作流
-- 自动化工程规范
-
----
-
-# 🔥 项目目标
-
-```txt
-Frontend Atlas
-致力于成为现代企业级前端基础设施平台。
-```
-
----
-
-# 📄 License
-
-MIT License
-
----
-
-# ⭐ Star
-
-如果这个项目对你有帮助，欢迎点一个 Star ⭐
+- 项目从开源后台模板 [Geeker-Admin](https://github.com/HalseySpicy/Geeker-Admin) 起步，正在逐步替换为自己的品牌、页面与内容。
+- 登录目前对接公开 mock 接口，仅用于本地体验；注册与重置密码界面已就绪，接口待接入。
+- 个人自用项目，暂未附带许可证文件。
