@@ -7,10 +7,11 @@ import { staticRouter, errorRouter } from '@/routers/modules/staticRouter';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-
 const routerMode = {
-  hash: () => createWebHashHistory(),
-  history: () => createWebHistory(),
+  // 部署在子路径（如 GitHub Pages 的 /frontend-atlas/）时，路由 base 必须与 Vite 的 base 一致，
+  // 否则地址栏带上子路径后匹配不到路由，会直接落到 404 页面
+  hash: () => createWebHashHistory(import.meta.env.BASE_URL),
+  history: () => createWebHistory(import.meta.env.BASE_URL),
 };
 /**
  * @description 📚 路由参数配置简介
