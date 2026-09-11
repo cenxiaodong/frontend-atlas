@@ -1,7 +1,6 @@
 <template>
   <Maximize v-show="maximize" />
   <el-main ref="mainRef">
-    {{ keepAliveName }}
     <router-view v-slot="{ Component, route }">
       <transition appear name="fade-transform" mode="out-in" @enter="restoreScroll">
         <keep-alive :include="keepAliveName">
