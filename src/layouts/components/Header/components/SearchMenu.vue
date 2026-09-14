@@ -1,9 +1,15 @@
 <template>
   <div class="search-menu">
     <SvgIcon name="sousuo" size="17px" @click="handleOpen" />
-    <!-- append-to-body="body" -->
 
-    <el-dialog class="search-dialog" v-model="isShowSearch" :width="globalStore.device === 'mobile' ? '85vw' : '40vw'" :show-close="false" top="10vh">
+    <el-dialog
+      class="search-dialog"
+      v-model="isShowSearch"
+      :width="globalStore.device === 'mobile' ? '85vw' : '40vw'"
+      :show-close="false"
+      top="10vh"
+      append-to-body
+    >
       <el-input v-model="searchMenu" ref="menuInputRef" placeholder="菜单搜索：支持菜单名称、路径" size="large" clearable :prefix-icon="Search" />
       <div v-if="searchList.length" class="menu-list" ref="menuListRef">
         <div
@@ -128,70 +134,75 @@ const handleClickMenu = () => {
 .search-menu {
   display: flex;
   align-items: center;
+}
 
-  :deep(.el-dialog) {
-    border-radius: 4px;
+// 弹窗加了 append-to-body 后挂在 body 下，内容元素仍带 scoped 标记，所以这些规则放顶层
+.menu-list {
+  max-height: 515px;
+  margin-top: 15px;
+  overflow: auto;
 
-    .el-dialog__header {
-      display: none;
+  .menu-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 45px;
+    padding: 0 20px;
+    margin: 10px 0;
+    color: var(--el-text-color-secondary);
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var(--el-border-color);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    .menu-lf {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu-icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    .menu-title {
+      font-size: 14px;
+    }
+
+    .menu-enter {
+      font-size: 17px;
     }
   }
 
-  .menu-list {
-    max-height: 515px;
-    margin-top: 15px;
-    overflow: auto;
+  .menu-active {
+    color: #fff;
+    background-color: var(--el-color-primary);
 
-    .menu-item {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 45px;
-      padding: 0 20px;
-      margin: 10px 0;
-      color: var(--el-text-color-secondary);
-      cursor: pointer;
-      background-color: transparent;
-      border: 1px solid var(--el-border-color);
-      border-radius: 6px;
-      transition: all 0.2s ease;
-
-      .menu-lf {
-        display: flex;
-        align-items: center;
-      }
-
-      .menu-icon {
-        margin-right: 8px;
-        font-size: 16px;
-      }
-
-      .menu-title {
-        font-size: 14px;
-      }
-
-      .menu-enter {
-        font-size: 17px;
-      }
+    .menu-icon {
+      font-size: 18px;
     }
 
-    .menu-active {
-      color: #fff;
-      background-color: var(--el-color-primary);
-
-      .menu-icon {
-        font-size: 18px;
-      }
-
-      .menu-title {
-        font-size: 16px;
-      }
-
-      .menu-enter {
-        font-size: 19px;
-      }
+    .menu-title {
+      font-size: 16px;
     }
+
+    .menu-enter {
+      font-size: 19px;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+// el-dialog 本体由 Element 渲染且已 teleport 到 body，scoped 选不中，需要全局样式
+.search-dialog.el-dialog,
+.search-dialog .el-dialog {
+  border-radius: 4px;
+
+  .el-dialog__header {
+    display: none;
   }
 }
 </style>

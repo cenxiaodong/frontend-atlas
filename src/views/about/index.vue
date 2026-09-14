@@ -33,6 +33,9 @@
         <el-descriptions-item label="pnpm版本" label-align="left">
           <el-tag>>=10</el-tag>
         </el-descriptions-item>
+        <el-descriptions-item label="预览地址" label-align="left">
+          <el-link type="primary" href="https://cenxiaodong.github.io/frontend-atlas" target="_blank"> 预览地址 </el-link>
+        </el-descriptions-item>
         <!-- <el-descriptions-item label="文档地址" label-align="left">
           <el-link type="primary" href="https://docs.spicyboy.cn" target="_blank"> 文档地址 </el-link>
         </el-descriptions-item>

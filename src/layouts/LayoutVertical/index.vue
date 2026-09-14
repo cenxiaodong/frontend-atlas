@@ -164,7 +164,7 @@ provide('toggleSidebar', toggleSidebar);
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 99;
+    z-index: var(--layout-z-aside);
     display: inline-block;
     width: auto;
     height: 100%;
@@ -219,7 +219,7 @@ provide('toggleSidebar', toggleSidebar);
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 20;
+    z-index: var(--layout-z-header);
     box-sizing: border-box;
     height: 95px;
     padding: 0;
@@ -258,7 +258,7 @@ provide('toggleSidebar', toggleSidebar);
 .drawer-bg {
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: var(--layout-z-mask);
   background: #000;
   opacity: 0.4;
 }

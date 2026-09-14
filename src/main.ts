@@ -10,6 +10,8 @@ import 'element-plus/dist/index.css';
 // element dark css
 import 'element-plus/theme-chalk/dark/css-vars.css';
 
+// 层级规范（z-index 变量）
+import '@/styles/z-index.scss';
 // common css
 import '@/styles/common.scss';
 // custom element css
@@ -24,6 +26,8 @@ import '@/styles/reset.scss';
 import pinia from './stores';
 // vue i18n
 import I18n from '@/languages/index';
+// directives
+import directives from '@/directives/index.ts';
 
 const app = createApp(App);
 
@@ -36,4 +40,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
-app.use(router).use(pinia).use(I18n).mount('#app');
+app.use(router).use(directives).use(pinia).use(I18n).mount('#app');

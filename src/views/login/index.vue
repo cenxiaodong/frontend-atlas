@@ -6,7 +6,7 @@ import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
 import { HOME_URL } from '@/config';
 import { useUserStore } from '@/stores/modules/user';
 import { initDynamicRouter } from '@/routers/modules/dynamicRouter';
-import { loginApi } from '@/api/modules/login';
+// import { loginApi } from '@/api/modules/login';
 
 const REMEMBER_KEY = 'atlas-login-account';
 
@@ -94,7 +94,10 @@ const submit = () => {
     if (!valid) return;
     loading.value = true;
     try {
-      const { data } = await loginApi({ username: form.username, password: form.password });
+      // let { data } = await loginApi({ username: form.username, password: form.password });
+      const data = {
+        access_token: 'dnfjdjfjdf34',
+      };
       userStore.setToken(data.access_token);
       userStore.setUserInfo({ name: form.username });
       rememberAccount();
@@ -203,7 +206,7 @@ const handleResetPassword = () => {
 
           <div class="form-options">
             <el-checkbox v-model="remember">记住账号</el-checkbox>
-            <el-link type="primary" :underline="false" @click="onForgot">忘记密码？</el-link>
+            <el-link type="primary" underline="hover" @click="onForgot">忘记密码？</el-link>
           </div>
 
           <el-button class="submit-btn" type="primary" size="large" :loading="loading" @click="submit">
@@ -213,7 +216,7 @@ const handleResetPassword = () => {
 
         <p v-if="isLogin" class="form-foot">
           还没有账号？
-          <el-link type="primary" :underline="false" @click="switchMode('register')">去注册</el-link>
+          <el-link type="primary" underline="hover" @click="switchMode('register')">去注册</el-link>
         </p>
 
         <el-form
@@ -246,7 +249,7 @@ const handleResetPassword = () => {
 
         <p v-if="!isLogin" class="form-foot">
           已有账号？
-          <el-link type="primary" :underline="false" @click="switchMode('login')">去登录</el-link>
+          <el-link type="primary" underline="hover" @click="switchMode('login')">去登录</el-link>
         </p>
       </main>
     </div>

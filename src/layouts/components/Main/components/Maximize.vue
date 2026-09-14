@@ -19,7 +19,7 @@ const exitMaximize = () => {
   position: fixed;
   top: -25px;
   right: -25px;
-  z-index: 999;
+  z-index: var(--layout-z-maximize);
   width: 55px;
   height: 55px;
   cursor: pointer;

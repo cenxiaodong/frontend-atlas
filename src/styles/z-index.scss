@@ -1,0 +1,17 @@
+/**
+ * 层级（z-index）规范
+ *
+ * 1. 布局层：0 - 999，样式里一律使用下面这些变量，不要再写魔法数字
+ *    - 头部 < 移动端遮罩 < 侧边栏 < 内容最大化按钮
+ *    - 移动端侧边栏要盖住头部，所以 aside 的值最大
+ * 2. 弹层（对话框 / 抽屉 / MessageBox / 下拉 / Tooltip）：全部交给 Element Plus，从 2000 起
+ *    - 起点由 App.vue 的 <el-config-provider :z-index="ELEMENT_Z_INDEX"> 控制（见 src/config/index.ts）
+ *    - 所以布局层只要小于 2000，弹层就永远在最上面
+ * 3. 开屏动画写在 index.html 的内联样式里（9999）：它要在业务 CSS 加载前就生效，因此不参与这套变量
+ */
+:root {
+  --layout-z-header: 100;
+  --layout-z-mask: 150;
+  --layout-z-aside: 200;
+  --layout-z-maximize: 900;
+}

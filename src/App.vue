@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n';
 import { getBrowserLang } from '@/utils';
 import { useTheme } from '@/hooks/useTheme';
 import { useGlobalStore } from '@/stores/modules/global';
+import { ELEMENT_Z_INDEX } from '@/config';
 import type { LanguageType } from './stores/interface';
 import en from 'element-plus/es/locale/lang/en';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
@@ -31,7 +32,7 @@ const locale = computed(() => {
 </script>
 
 <template>
-  <el-config-provider :locale="locale" :size="assemblySize">
+  <el-config-provider :locale="locale" :size="assemblySize" :z-index="ELEMENT_Z_INDEX">
     <router-view></router-view>
   </el-config-provider>
   <!-- <SplashScreen /> -->

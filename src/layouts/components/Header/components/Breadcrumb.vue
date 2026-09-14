@@ -29,12 +29,12 @@ const authStore = useAuthStore();
 const globalStore = useGlobalStore();
 
 const breadcrumbList = computed(() => {
-  console.log(route.matched);
-
-  let breadcrumbData = (authStore.breadcrumbListGet as Record<string, any[]>)?.[route.matched[route.matched.length - 1]?.path ?? ''] ?? [];
+  const breadcrumbData = (authStore.breadcrumbListGet as Record<string, any[]>)?.[route.matched[route.matched.length - 1]?.path ?? ''] ?? [];
+  // 空列表（退出登录清空菜单、404、登录页等）直接返回，避免下面取 breadcrumbData[0] 报错
+  if (!breadcrumbData.length) return breadcrumbData;
   // 🙅‍♀️不需要首页面包屑可删除以下判断
   if (breadcrumbData[0].path !== HOME_URL) {
-    breadcrumbData = [{ path: HOME_URL, meta: { icon: 'HomeFilled', title: '首页' } }, ...breadcrumbData];
+    return [{ path: HOME_URL, meta: { icon: 'HomeFilled', title: '首页' } }, ...breadcrumbData];
   }
   return breadcrumbData;
 });
