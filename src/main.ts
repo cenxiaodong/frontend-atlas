@@ -1,5 +1,3 @@
-import './assets/main.css';
-
 import { createApp } from 'vue';
 
 import App from './App.vue';
@@ -12,6 +10,10 @@ import 'element-plus/theme-chalk/dark/css-vars.css';
 
 // 层级规范（z-index 变量）
 import '@/styles/z-index.scss';
+// 布局尺寸变量（高度/宽度）
+import '@/styles/layout.scss';
+// 样式reset文件
+import '@/styles/reset.scss';
 // common css
 import '@/styles/common.scss';
 // custom element css

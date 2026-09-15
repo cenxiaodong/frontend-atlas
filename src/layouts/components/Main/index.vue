@@ -9,9 +9,9 @@
       </transition>
     </router-view>
   </el-main>
-  <!--<el-footer v-show="footer">
+  <el-footer v-show="footer">
     <Footer />
-  </el-footer>-->
+  </el-footer>
 </template>
 
 <script setup lang="ts">
@@ -22,6 +22,7 @@ import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '@/stores/modules/global';
 import { useKeepAliveStore } from '@/stores/modules/keepAlive';
 import Maximize from './components/Maximize.vue';
+import Footer from '@/layouts/components/Footer/index.vue';
 
 const route = useRoute();
 const globalStore = useGlobalStore();
@@ -30,9 +31,7 @@ defineProps<{
   isRouterShow: boolean;
 }>();
 
-// import Footer from '@/layouts/components/Footer/index.vue';
-
-const { maximize, layout } = storeToRefs(globalStore);
+const { maximize, layout, footer } = storeToRefs(globalStore);
 
 const keepAliveStore = useKeepAliveStore();
 const { keepAliveName } = storeToRefs(keepAliveStore);

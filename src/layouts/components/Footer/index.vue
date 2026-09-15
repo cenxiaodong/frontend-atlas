@@ -6,7 +6,11 @@
 
 <style lang="scss" scoped>
 .footer {
-  height: 30px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--layout-footer-height);
   background-color: var(--el-bg-color);
   border-top: 1px solid var(--el-border-color-light);
 

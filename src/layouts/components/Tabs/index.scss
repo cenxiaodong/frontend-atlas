@@ -33,7 +33,7 @@
     :deep(.el-tabs) {
       .el-tabs__header {
         box-sizing: border-box;
-        height: 40px;
+        height: var(--layout-tabs-height);
         padding: 0 10px;
         margin: 0;
 

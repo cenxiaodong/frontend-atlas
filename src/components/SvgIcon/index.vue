@@ -65,5 +65,6 @@ const finalStyle = computed<CSSProperties>(() => {
   display: inline-block;
   cursor: pointer;
   outline: none;
+  fill: currentcolor;
 }
 </style>

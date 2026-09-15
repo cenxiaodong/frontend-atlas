@@ -1,3 +1,9 @@
+<template>
+  <el-config-provider :locale="locale" :size="assemblySize" :z-index="ELEMENT_Z_INDEX">
+    <router-view></router-view>
+  </el-config-provider>
+  <!-- <SplashScreen /> -->
+</template>
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -19,6 +25,8 @@ initTheme();
 // init language
 const i18n = useI18n();
 onMounted(() => {
+  console.log('app');
+
   const language = globalStore.language ?? getBrowserLang();
   i18n.locale.value = language;
   globalStore.setGlobalState('language', language as LanguageType);
@@ -30,12 +38,5 @@ const locale = computed(() => {
   return getBrowserLang() == 'zh' ? zhCn : en;
 });
 </script>
-
-<template>
-  <el-config-provider :locale="locale" :size="assemblySize" :z-index="ELEMENT_Z_INDEX">
-    <router-view></router-view>
-  </el-config-provider>
-  <!-- <SplashScreen /> -->
-</template>
 
 <style lang="scss"></style>

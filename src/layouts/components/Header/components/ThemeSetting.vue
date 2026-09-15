@@ -1,12 +1,10 @@
 <template>
-  <div class="theme-setting">
-    <i :class="'iconfont icon-zhuti'" class="toolBar-icon" @click="openDrawer"></i>
-  </div>
+  <SvgIcon name="zhuti" size="19px" @click="openDrawer" />
 </template>
 
 <script setup lang="ts">
-// import mittBus from "@/utils/mittBus";
+import mittBus from '@/utils/eventBus';
 const openDrawer = () => {
-  // mittBus.emit("openThemeDrawer");
+  mittBus.emit('openThemeDrawer');
 };
 </script>

@@ -45,6 +45,7 @@ export default defineConfigWithVueTs(
       'vue/html-closing-bracket-newline': 'error', // 在标签的右括号之前要求或禁止换行
       'vue/attribute-hyphenation': 'error', // 对模板中的自定义组件强制执行属性命名样式：my-prop="prop"
       'vue/attributes-order': 'off', // vue api使用顺序，强制执行属性顺序
+      'vue/block-order': ['error', { order: ['template', 'script', 'style'] }], // 单文件组件顶层顺序：template → script → style
       'vue/no-v-html': 'off', // 禁止使用 v-html
       'vue/require-default-prop': 'off', // 此规则要求为每个 prop 为必填时，必须提供默认值
       'vue/multi-word-component-names': 'off', // 要求组件名称始终为 “-” 链接的单词

@@ -55,7 +55,10 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
       // 指定存放 SVG 图标的文件夹路径
       iconDirs: [resolve(process.cwd(), "src/assets/icons")],
       // 定义生成 symbol 的 id 格式，[name] 会被替换为文件名
-      symbolId: "icon-[dir]-[name]"
+      symbolId: "icon-[dir]-[name]",
+      svgoOptions:{
+        plugins:[{name: 'removeAttrs', params: { attrs: 'fill' }}]
+      }
     }),
     // 创建打包压缩配置
     createCompression(viteEnv),

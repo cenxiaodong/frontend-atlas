@@ -1,3 +1,8 @@
+<template>
+  <!-- 开屏页 DOM 由 index.html 内联渲染，本组件负责在应用就绪后触发淡出并移除 -->
+  <div class="splash-controller"></div>
+</template>
+
 <script setup lang="ts" name="SplashScreen">
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
@@ -20,17 +25,7 @@ const hideSplash = () => {
   window.setTimeout(() => splash.remove(), FADE_DURATION);
 };
 
-const initSkip = () => {
-  document.getElementById('splash-skip')?.addEventListener('click', hideSplash);
-};
-
 onMounted(() => {
-  initSkip();
   Promise.all([router.isReady(), new Promise((resolve) => setTimeout(resolve, MIN_SPLASH_TIME))]).then(() => hideSplash());
 });
 </script>
-
-<template>
-  <!-- 开屏页 DOM 由 index.html 内联渲染，本组件负责在应用就绪后触发淡出并移除 -->
-  <div class="splash-controller"></div>
-</template>

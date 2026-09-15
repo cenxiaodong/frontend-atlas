@@ -101,6 +101,6 @@ frontend-atlas/
 
 ## 说明
 
-- 项目从开源后台模板 [Geeker-Admin](https://github.com/HalseySpicy/Geeker-Admin) 起步，正在逐步替换为自己的品牌、页面与内容。
+- 项目基于开源后台模板 [Geeker-Admin](https://github.com/HalseySpicy/Geeker-Admin)（MIT License）二次开发起步，沿用了其整体架构与权限、请求、主题等基础实现，并逐步替换为自有品牌、页面与内容。感谢原作者的开源与分享。
 - 登录目前对接公开 mock 接口，仅用于本地体验；注册与重置密码界面已就绪，接口待接入。
-- 个人自用项目，暂未附带许可证文件。
+- 个人自用项目，暂未附带许可证文件；因沿用 Geeker-Admin（MIT）的实现，需保留其原始版权声明。

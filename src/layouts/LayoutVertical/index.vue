@@ -1,3 +1,50 @@
+<template>
+  <el-container
+    :class="[
+      'layout',
+      device,
+      {
+        openSidebar: isMobileMenuOpen,
+      },
+    ]"
+  >
+    <el-aside :style="{ width: asideWidth }">
+      <div class="aside-box">
+        <div class="logo flx-center">
+          <img src="/logo.svg" class="logo-img" alt="logo" />
+          <span v-show="!isCollapse" class="logo-text">前端图鉴</span>
+        </div>
+        <el-scrollbar>
+          <el-menu
+            :router="false"
+            :default-active="activeMenu"
+            :collapse="isMobileMenuOpen ? false : isCollapse"
+            :unique-opened="true"
+            :collapse-transition="false"
+          >
+            <SubMenu :menu-list="menuList" />
+          </el-menu>
+        </el-scrollbar>
+      </div>
+    </el-aside>
+
+    <el-container class="main-container" :style="{ marginLeft: mainMarginLeft, paddingTop: headerHeight, paddingBottom: FooterHeight }">
+      <el-header :style="{ width: headerWidth, height: headerHeight }">
+        <div class="header-toolbar">
+          <ToolBarLeft />
+          <ToolBarRight />
+        </div>
+        <Tabs v-show="tabs" />
+      </el-header>
+      <Main :is-router-show="isRouterShow" />
+    </el-container>
+  </el-container>
+
+  <!-- 移动端遮罩层 -->
+  <Transition name="fade">
+    <div v-if="device == 'mobile' && isMobileMenuOpen" class="drawer-bg" @click="isMobileMenuOpen = false" />
+  </Transition>
+</template>
 <script setup lang="ts">
 import { computed, provide, ref, onBeforeUnmount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
@@ -12,7 +59,8 @@ import ToolBarRight from '@/layouts/components/Header/ToolBarRight.vue';
 import SubMenu from '@/layouts/components/Menu/SubMenu.vue';
 
 // ==================== 常量 ====================
-const SIDEBAR_WIDTH = { expanded: '210px', collapsed: '65px' } as const;
+// 侧边栏宽度引用 src/styles/layout.scss 里的变量，数值只有一个来源
+const SIDEBAR_WIDTH = { expanded: 'var(--layout-sidebar-width)', collapsed: 'var(--layout-sidebar-collapse-width)' } as const;
 const BREAKPOINTS = { mobile: MOBILE_WIDTH, collapse: 1200 } as const;
 
 // ==================== 响应式状态 ====================
@@ -31,6 +79,7 @@ const isCollapse = computed(() => globalStore.isCollapse);
 const menuList = computed(() => authStore.showMenuListGet);
 const activeMenu = computed(() => (route.meta.activeMenu ?? route.path) as string);
 const tabs = computed(() => globalStore.tabs);
+const footer = computed(() => globalStore.footer);
 
 /** 侧边栏始终用展开宽度渲染，移动端通过 CSS transform 控制显隐 */
 const asideWidth = computed(() => {
@@ -49,6 +98,15 @@ const mainMarginLeft = computed(() => {
 const headerWidth = computed(() => {
   if (device.value == 'mobile') return '100%';
   return `calc(100% - ${isCollapse.value ? SIDEBAR_WIDTH.collapsed : SIDEBAR_WIDTH.expanded})`;
+});
+/** 顶部 Header 高度：显示标签页时为「工具条 + 标签页」 */
+const headerHeight = computed(() => {
+  return tabs.value ? 'calc(var(--layout-header-height) + var(--layout-tabs-height))' : 'var(--layout-header-height)';
+});
+
+/** 底部 Footer 高度 */
+const FooterHeight = computed(() => {
+  return footer.value ? 'var(--layout-footer-height)' : '0px';
 });
 
 // ==================== 方法 ====================
@@ -93,54 +151,6 @@ provide('refresh', (val: boolean) => (isRouterShow.value = val));
 provide('toggleSidebar', toggleSidebar);
 </script>
 
-<template>
-  <el-container
-    :class="[
-      'layout',
-      device,
-      {
-        openSidebar: isMobileMenuOpen,
-      },
-    ]"
-  >
-    <el-aside :style="{ width: asideWidth }">
-      <div class="aside-box">
-        <div class="logo flx-center">
-          <img src="/logo.svg" class="logo-img" alt="logo" />
-          <span v-show="!isCollapse" class="logo-text">前端图鉴</span>
-        </div>
-        <el-scrollbar>
-          <el-menu
-            :router="false"
-            :default-active="activeMenu"
-            :collapse="isMobileMenuOpen ? false : isCollapse"
-            :unique-opened="true"
-            :collapse-transition="false"
-          >
-            <SubMenu :menu-list="menuList" />
-          </el-menu>
-        </el-scrollbar>
-      </div>
-    </el-aside>
-
-    <el-container class="main-container" :style="{ marginLeft: mainMarginLeft }" style="padding-top: 95px">
-      <el-header :style="{ width: headerWidth }">
-        <div class="header-toolbar">
-          <ToolBarLeft />
-          <ToolBarRight />
-        </div>
-        <Tabs v-show="tabs" />
-      </el-header>
-      <Main :is-router-show="isRouterShow" />
-    </el-container>
-  </el-container>
-
-  <!-- 移动端遮罩层 -->
-  <Transition name="fade">
-    <div v-if="device == 'mobile' && isMobileMenuOpen" class="drawer-bg" @click="isMobileMenuOpen = false" />
-  </Transition>
-</template>
-
 <style lang="scss" scoped>
 // ==================== 动画 ====================
 @keyframes fade-in {
@@ -179,7 +189,7 @@ provide('toggleSidebar', toggleSidebar);
       transition: width 0.3s ease;
 
       .el-scrollbar {
-        height: calc(100% - 55px);
+        height: calc(100% - var(--layout-header-height));
 
         .el-menu {
           width: 100%;
@@ -190,7 +200,7 @@ provide('toggleSidebar', toggleSidebar);
 
       .logo {
         box-sizing: border-box;
-        height: 55px;
+        height: var(--layout-header-height);
 
         .logo-img {
           width: 28px;
@@ -221,7 +231,6 @@ provide('toggleSidebar', toggleSidebar);
     right: 0;
     z-index: var(--layout-z-header);
     box-sizing: border-box;
-    height: 95px;
     padding: 0;
     background-color: var(--el-header-bg-color);
     border-bottom: 1px solid var(--el-header-border-color);
@@ -231,7 +240,7 @@ provide('toggleSidebar', toggleSidebar);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 55px;
+      height: var(--layout-header-height);
       padding: 0 15px;
       border-bottom: 1px solid var(--el-header-border-color);
     }
@@ -247,7 +256,7 @@ provide('toggleSidebar', toggleSidebar);
 
   &.openSidebar {
     :deep(.el-aside) {
-      width: 210px !important;
+      width: var(--layout-sidebar-width) !important;
       transform: translateX(0);
       transition: transform 0.3s;
     }

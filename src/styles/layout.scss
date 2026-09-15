@@ -1,0 +1,14 @@
+/**
+ * 布局尺寸规范
+ *
+ * 公共高度/宽度统一定义在这里，SCSS 与 JS 都只写 var() / calc()，不要再出现具体数值。
+ * - JS 侧（src/layouts/LayoutVertical/index.vue）只拼接变量字符串，不持有数值
+ * - 若某天某个值需要参与 JS 数值计算（比较、Math、传 number），再把它迁到 src/config/index.ts 并在 main.ts 注入
+ */
+:root {
+  --layout-header-height: 55px; /* 顶部工具条高度 */
+  --layout-tabs-height: 40px; /* 标签页高度 */
+  --layout-sidebar-width: 210px; /* 侧边栏展开宽度 */
+  --layout-sidebar-collapse-width: 65px; /* 侧边栏折叠宽度 */
+  --layout-footer-height: 30px; /* 底部footer高度 */
+}

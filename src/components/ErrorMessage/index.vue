@@ -1,3 +1,20 @@
+<template>
+  <div class="error-container" :class="{ 'is-embed': !fullscreen }">
+    <div class="error-box">
+      <img :src="config.img" class="error-img" :alt="`${code} 错误`" />
+      <div class="error-detail">
+        <h2 class="error-code">{{ code }}</h2>
+        <h4 class="error-desc">{{ desc }}</h4>
+        <div class="error-actions">
+          <el-button type="primary" round @click="goHome">返回首页</el-button>
+          <el-button v-if="canGoBack()" round @click="goBack">返回上一页</el-button>
+          <el-button v-if="config.refresh" round plain @click="refresh">刷新页面</el-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts" name="ErrorMessage">
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -48,23 +65,6 @@ const goHome = () => router.push(HOME_URL);
 const goBack = () => router.back();
 const refresh = () => window.location.reload();
 </script>
-
-<template>
-  <div class="error-container" :class="{ 'is-embed': !fullscreen }">
-    <div class="error-box">
-      <img :src="config.img" class="error-img" :alt="`${code} 错误`" />
-      <div class="error-detail">
-        <h2 class="error-code">{{ code }}</h2>
-        <h4 class="error-desc">{{ desc }}</h4>
-        <div class="error-actions">
-          <el-button type="primary" round @click="goHome">返回首页</el-button>
-          <el-button v-if="canGoBack()" round @click="goBack">返回上一页</el-button>
-          <el-button v-if="config.refresh" round plain @click="refresh">刷新页面</el-button>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped lang="scss">
 @use './index';

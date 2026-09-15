@@ -1,18 +1,8 @@
-/* base reset */
-html,
-body {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-/* 布局容器的高度链：少一个，滚动就会从内容区跑到 window 上 */
-#app,
-#watermark {
-  width: 100%;
-  height: 100%;
-}
+/*
+ * 全局基础样式
+ * 颜色一律使用 Element Plus 的变量，跟随 html.dark（见 src/hooks/useTheme.ts），
+ * 不要再用 create-vue 脚手架那套 --vt-c-* / --color-*（只跟随系统外观，与项目暗黑开关不同步）
+ */
 
 *,
 *::before,
@@ -23,6 +13,7 @@ body {
 }
 
 body {
+  min-height: 100vh;
   font-family:
     system-ui,
     -apple-system,
@@ -35,9 +26,6 @@ body {
   transition:
     color 0.5s,
     background-color 0.5s;
-}
-
-/* 解决 h1 标签在 webkit 内核浏览器中文字大小失效问题 */
-:-webkit-any(article, aside, nav, section) h1 {
-  font-size: 2em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

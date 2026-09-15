@@ -67,25 +67,6 @@
         animation-delay: 0.3s;
       }
 
-      .splash-skip {
-        position: fixed;
-        right: 24px;
-        bottom: 24px;
-        padding: 6px 18px;
-        font-size: 13px;
-        color: #6366f1;
-        border: 1px solid rgba(99, 102, 241, 0.45);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.65);
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-
-      .splash-skip:hover {
-        background: #fff;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.18);
-      }
-
       @keyframes splash-pop {
         from {
           transform: scale(0.6);
@@ -118,8 +99,21 @@
         <img class="splash-logo" src="/logo.png" alt="Frontend-Atlas" />
         <div class="splash-loading"><i></i><i></i><i></i></div>
       </div>
-      <div class="splash-skip" id="splash-skip">跳过</div>
     </div> -->
+    <!-- 主题预热：Vue 挂载前先按 localStorage 里的设置上底色，避免暗色模式刷新时闪一下浅色 -->
+    <script>
+      (() => {
+        try {
+          const state = JSON.parse(localStorage.getItem('atlas-global') || '');
+          if (!state || !state.isDark) return;
+          const html = document.documentElement;
+          html.classList.add('dark');
+          html.style.background = '#0a0a0a';
+        } catch {
+          /* localStorage 不可用或数据损坏时静默跳过，交给 App.vue 的 initTheme 处理 */
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

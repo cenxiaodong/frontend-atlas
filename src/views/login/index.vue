@@ -1,137 +1,3 @@
-<script setup lang="ts" name="login">
-import { computed, onMounted, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Lock, User } from '@element-plus/icons-vue';
-import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { HOME_URL } from '@/config';
-import { useUserStore } from '@/stores/modules/user';
-import { initDynamicRouter } from '@/routers/modules/dynamicRouter';
-// import { loginApi } from '@/api/modules/login';
-
-const REMEMBER_KEY = 'atlas-login-account';
-
-const router = useRouter();
-const userStore = useUserStore();
-const formRef = ref<FormInstance>();
-const loading = ref(false);
-const remember = ref(true);
-
-const form = reactive({
-  username: '',
-  password: '',
-});
-
-const rules: FormRules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, max: 20, message: '密码长度为 6-20 位', trigger: 'blur' },
-  ],
-};
-
-// 登录 / 注册切换
-const mode = ref<'login' | 'register'>('login');
-const isLogin = computed(() => mode.value === 'login');
-const switchMode = (m: 'login' | 'register') => {
-  mode.value = m;
-  loading.value = false;
-};
-
-// 注册表单
-const regRef = ref<FormInstance>();
-const regForm = reactive({ username: '', password: '', confirmPassword: '' });
-const samePwdValidator = (getPwd: () => string) => (_rule: any, value: string, cb: (err?: Error) => void) => {
-  if (!value) cb(new Error('请再次输入密码'));
-  else if (value !== getPwd()) cb(new Error('两次输入的密码不一致'));
-  else cb();
-};
-const registerRules: FormRules = {
-  username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 2, max: 20, message: '用户名长度为 2-20 位', trigger: 'blur' },
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, max: 20, message: '密码长度为 6-20 位', trigger: 'blur' },
-  ],
-  confirmPassword: [
-    { required: true, message: '请再次输入密码', trigger: 'blur' },
-    { validator: samePwdValidator(() => regForm.password), trigger: 'blur' },
-  ],
-};
-
-// 重置密码弹窗
-const resetVisible = ref(false);
-const resetRef = ref<FormInstance>();
-const resetForm = reactive({ username: '', password: '', confirmPassword: '' });
-const resetRules: FormRules = {
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-  password: [
-    { required: true, message: '请输入新密码', trigger: 'blur' },
-    { min: 6, max: 20, message: '密码长度为 6-20 位', trigger: 'blur' },
-  ],
-  confirmPassword: [
-    { required: true, message: '请再次输入新密码', trigger: 'blur' },
-    { validator: samePwdValidator(() => resetForm.password), trigger: 'blur' },
-  ],
-};
-
-onMounted(() => {
-  const saved = localStorage.getItem(REMEMBER_KEY);
-  if (saved) {
-    form.username = saved;
-    remember.value = true;
-  }
-});
-
-const rememberAccount = () => {
-  if (remember.value && form.username) localStorage.setItem(REMEMBER_KEY, form.username);
-  else localStorage.removeItem(REMEMBER_KEY);
-};
-
-const submit = () => {
-  formRef.value?.validate(async (valid) => {
-    if (!valid) return;
-    loading.value = true;
-    try {
-      // let { data } = await loginApi({ username: form.username, password: form.password });
-      const data = {
-        access_token: 'dnfjdjfjdf34',
-      };
-      userStore.setToken(data.access_token);
-      userStore.setUserInfo({ name: form.username });
-      rememberAccount();
-      ElMessage.success('登录成功，欢迎回来');
-      await initDynamicRouter();
-      await router.push(HOME_URL);
-    } catch {
-      // 错误提示由请求拦截器统一处理
-    } finally {
-      loading.value = false;
-    }
-  });
-};
-
-const onForgot = () => {
-  resetForm.username = form.username;
-  resetVisible.value = true;
-};
-const handleRegister = () => {
-  regRef.value?.validate((valid) => {
-    if (!valid) return;
-    // TODO: 注册接口待接入
-    ElMessage.info('注册功能待接入');
-  });
-};
-const handleResetPassword = () => {
-  resetRef.value?.validate((valid) => {
-    if (!valid) return;
-    // TODO: 重置密码接口待接入
-    ElMessage.info('重置密码接口待接入');
-  });
-};
-</script>
-
 <template>
   <div class="login-page">
     <svg class="login-defs" aria-hidden="true" focusable="false">
@@ -281,6 +147,140 @@ const handleResetPassword = () => {
     </el-dialog>
   </div>
 </template>
+
+<script setup lang="ts" name="login">
+import { computed, onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { Lock, User } from '@element-plus/icons-vue';
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
+import { HOME_URL } from '@/config';
+import { useUserStore } from '@/stores/modules/user';
+import { initDynamicRouter } from '@/routers/modules/dynamicRouter';
+// import { loginApi } from '@/api/modules/login';
+
+const REMEMBER_KEY = 'atlas-login-account';
+
+const router = useRouter();
+const userStore = useUserStore();
+const formRef = ref<FormInstance>();
+const loading = ref(false);
+const remember = ref(true);
+
+const form = reactive({
+  username: '',
+  password: '',
+});
+
+const rules: FormRules = {
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 20, message: '密码长度为 6-20 位', trigger: 'blur' },
+  ],
+};
+
+// 登录 / 注册切换
+const mode = ref<'login' | 'register'>('login');
+const isLogin = computed(() => mode.value === 'login');
+const switchMode = (m: 'login' | 'register') => {
+  mode.value = m;
+  loading.value = false;
+};
+
+// 注册表单
+const regRef = ref<FormInstance>();
+const regForm = reactive({ username: '', password: '', confirmPassword: '' });
+const samePwdValidator = (getPwd: () => string) => (_rule: any, value: string, cb: (err?: Error) => void) => {
+  if (!value) cb(new Error('请再次输入密码'));
+  else if (value !== getPwd()) cb(new Error('两次输入的密码不一致'));
+  else cb();
+};
+const registerRules: FormRules = {
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 2, max: 20, message: '用户名长度为 2-20 位', trigger: 'blur' },
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 20, message: '密码长度为 6-20 位', trigger: 'blur' },
+  ],
+  confirmPassword: [
+    { required: true, message: '请再次输入密码', trigger: 'blur' },
+    { validator: samePwdValidator(() => regForm.password), trigger: 'blur' },
+  ],
+};
+
+// 重置密码弹窗
+const resetVisible = ref(false);
+const resetRef = ref<FormInstance>();
+const resetForm = reactive({ username: '', password: '', confirmPassword: '' });
+const resetRules: FormRules = {
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [
+    { required: true, message: '请输入新密码', trigger: 'blur' },
+    { min: 6, max: 20, message: '密码长度为 6-20 位', trigger: 'blur' },
+  ],
+  confirmPassword: [
+    { required: true, message: '请再次输入新密码', trigger: 'blur' },
+    { validator: samePwdValidator(() => resetForm.password), trigger: 'blur' },
+  ],
+};
+
+onMounted(() => {
+  const saved = localStorage.getItem(REMEMBER_KEY);
+  if (saved) {
+    form.username = saved;
+    remember.value = true;
+  }
+});
+
+const rememberAccount = () => {
+  if (remember.value && form.username) localStorage.setItem(REMEMBER_KEY, form.username);
+  else localStorage.removeItem(REMEMBER_KEY);
+};
+
+const submit = () => {
+  formRef.value?.validate(async (valid) => {
+    if (!valid) return;
+    loading.value = true;
+    try {
+      // let { data } = await loginApi({ username: form.username, password: form.password });
+      const data = {
+        access_token: 'dnfjdjfjdf34',
+      };
+      userStore.setToken(data.access_token);
+      userStore.setUserInfo({ name: form.username });
+      rememberAccount();
+      ElMessage.success('登录成功，欢迎回来');
+      await initDynamicRouter();
+      await router.push(HOME_URL);
+    } catch {
+      // 错误提示由请求拦截器统一处理
+    } finally {
+      loading.value = false;
+    }
+  });
+};
+
+const onForgot = () => {
+  resetForm.username = form.username;
+  resetVisible.value = true;
+};
+const handleRegister = () => {
+  regRef.value?.validate((valid) => {
+    if (!valid) return;
+    // TODO: 注册接口待接入
+    ElMessage.info('注册功能待接入');
+  });
+};
+const handleResetPassword = () => {
+  resetRef.value?.validate((valid) => {
+    if (!valid) return;
+    // TODO: 重置密码接口待接入
+    ElMessage.info('重置密码接口待接入');
+  });
+};
+</script>
 
 <style scoped lang="scss">
 .login-page {

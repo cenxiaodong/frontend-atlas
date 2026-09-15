@@ -1,8 +1,13 @@
+<template>
+  <component :is="LayoutComponents[layout as LayoutType]" />
+  <ThemeDrawer />
+</template>
 <script setup lang="ts">
 import { computed, watch, type Component } from 'vue';
 import { useGlobalStore } from '@/stores/modules/global';
 import LayoutVertical from './LayoutVertical/index.vue';
 import type { LayoutType } from '@/stores/interface';
+import ThemeDrawer from './components/ThemeDrawer/index.vue';
 const LayoutComponents: Record<LayoutType, Component> = {
   vertical: LayoutVertical,
   classic: LayoutVertical,
@@ -22,7 +27,4 @@ watch(
   { immediate: true },
 );
 </script>
-<template>
-  <component :is="LayoutComponents[layout as LayoutType]" />
-</template>
 <style lang="scss" scoped></style>
