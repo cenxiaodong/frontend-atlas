@@ -5,8 +5,6 @@ import { useKeepAliveStore } from './keepAlive';
 import type { TabsState, TabsMenuProps } from '@/stores/interface';
 import piniaPersistConfig from '@/stores/helper/persist';
 
-const keepAliveStore = useKeepAliveStore();
-
 export const useTabsStore = defineStore('atlas-tabs', {
   state: (): TabsState => ({
     tabsMenuList: [],
@@ -14,6 +12,7 @@ export const useTabsStore = defineStore('atlas-tabs', {
   actions: {
     // Add Tabs
     async addTabs(tabItem: TabsMenuProps) {
+      const keepAliveStore = useKeepAliveStore();
       if (this.tabsMenuList.every((item: TabsMenuProps) => item.path !== tabItem.path)) {
         this.tabsMenuList.push(tabItem);
       }
@@ -24,6 +23,7 @@ export const useTabsStore = defineStore('atlas-tabs', {
     },
     // Remove Tabs
     async removeTabs(tabPath: string, isCurrent: boolean = true) {
+      const keepAliveStore = useKeepAliveStore();
       if (isCurrent) {
         this.tabsMenuList.forEach((item: TabsMenuProps, index: number) => {
           if (item.path !== tabPath) return;
@@ -40,6 +40,7 @@ export const useTabsStore = defineStore('atlas-tabs', {
     },
     // Close Tabs On Side
     async closeTabsOnSide(path: string, type: 'left' | 'right') {
+      const keepAliveStore = useKeepAliveStore();
       const currentIndex = this.tabsMenuList.findIndex((item: TabsMenuProps) => item.path === path);
       if (currentIndex !== -1) {
         // 声明成元组，否则 noUncheckedIndexedAccess 下 range[0] / range[1] 会被推断为 number | undefined
@@ -54,6 +55,7 @@ export const useTabsStore = defineStore('atlas-tabs', {
     },
     // Close MultipleTab
     async closeMultipleTab(tabsMenuValue?: string) {
+      const keepAliveStore = useKeepAliveStore();
       this.tabsMenuList = this.tabsMenuList.filter((item: TabsMenuProps) => {
         return item.path === tabsMenuValue || !item.close;
       });

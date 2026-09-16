@@ -1,7 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import { showFullScreenLoading, tryHideFullScreenLoading } from '@/components/Loading/fullScreen';
-import { LOGIN_URL } from '@/config';
 import { ElMessage } from 'element-plus';
 import type { ResultData, CustomRequestConfig } from '@/api/interface';
 import { ResultEnum } from '@/enums/httpEnum';
@@ -9,6 +8,7 @@ import { ContentTypeEnum } from '@/enums/httpEnum';
 import { checkStatus } from './helper/checkStatus';
 import { AxiosCanceler } from './helper/axiosCancel';
 import { useUserStore } from '@/stores/modules/user';
+import { resetAuthState } from '@/utils/auth';
 import router from '@/routers';
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -78,13 +78,11 @@ class RequestHttp {
     this.service.interceptors.response.use(
       (response: AxiosResponse & { config: CustomAxiosRequestConfig }) => {
         const { data, config } = response;
-        const userStore = useUserStore();
         axiosCanceler.removePending(config);
         config.loading && tryHideFullScreenLoading();
-        // 登录失效
+        // 登录失效：清干净登录态（权限、缓存、tab、token）再回登录页
         if (data.code == ResultEnum.OVERDUE) {
-          userStore.setToken('');
-          router.replace(LOGIN_URL);
+          resetAuthState();
           ElMessage.error(data.msg);
           return Promise.reject(data);
         }

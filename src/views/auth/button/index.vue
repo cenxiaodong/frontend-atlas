@@ -35,8 +35,7 @@ import { CirclePlus, Delete, Download, EditPen, Upload } from '@element-plus/ico
 import { useAuthButtons } from '@/hooks/useAuthButtons';
 
 const { BUTTONS } = useAuthButtons();
-
-console.log(BUTTONS.value, 'BUTTONS');
+console.log(BUTTONS.value);
 </script>
 
 <style scoped lang="scss">

@@ -1,6 +1,8 @@
 <template>
   <div class="search-menu">
-    <SvgIcon name="sousuo" size="17px" @click="handleOpen" />
+    <el-tooltip :content="`搜索菜单（${shortcutText}）`" placement="bottom">
+      <SvgIcon name="sousuo" size="17px" @click="toggleSearch" />
+    </el-tooltip>
 
     <el-dialog
       class="search-dialog"
@@ -9,6 +11,7 @@
       :show-close="false"
       top="10vh"
       append-to-body
+      @opened="focusInput"
     >
       <el-input v-model="searchMenu" ref="menuInputRef" placeholder="菜单搜索：支持菜单名称、路径" size="large" clearable :prefix-icon="Search" />
       <div v-if="searchList.length" class="menu-list" ref="menuListRef">
@@ -25,7 +28,7 @@
             </el-icon>
             <span class="menu-title">{{ item.meta.title }}</span>
           </div>
-          <i :class="'iconfont icon-huiche'" class="menu-enter" @click="handleOpen"></i>
+          <SvgIcon name="huiche" size="26px" @click="toggleSearch" />
         </div>
       </div>
       <el-empty v-else class="mt20 mb20" :image-size="100" description="暂无菜单" />
@@ -39,7 +42,7 @@ import type { InputInstance } from 'element-plus';
 import { Search } from '@element-plus/icons-vue';
 import { useAuthStore } from '@/stores/modules/auth';
 import { useRouter } from 'vue-router';
-import { useDebounceFn } from '@vueuse/core';
+import { useDebounceFn, useMagicKeys } from '@vueuse/core';
 import { useGlobalStore } from '@/stores/modules/global';
 
 const router = useRouter();
@@ -56,6 +59,37 @@ const menuInputRef = ref<InputInstance | null>(null);
 const isShowSearch = ref<boolean>(false);
 const searchMenu = ref<string>('');
 
+// ==================== 打开 / 关闭 ====================
+// 快捷键提示按平台显示，免得 Windows 用户看到 ⌘ 一脸懵
+const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.userAgent);
+const shortcutText = isMac ? '⌘K' : 'Ctrl+K';
+
+const focusInput = () => {
+  // 挂在 dialog 的 opened 上：此时打开动画已结束，聚焦不会带着动画一起滚
+  menuInputRef.value?.focus();
+};
+
+const toggleSearch = () => {
+  isShowSearch.value = !isShowSearch.value;
+};
+
+// Cmd+K（mac）/ Ctrl+K（win）全局唤起。
+// 注意：Ctrl+K 是浏览器自带的「聚焦地址栏」，必须 preventDefault 拦掉，
+// 而 preventDefault 要求 useMagicKeys 用非 passive 方式监听。
+const keys = useMagicKeys({
+  passive: false,
+  onEventFired: (e: KeyboardEvent) => {
+    if (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) e.preventDefault();
+  },
+});
+
+// noUncheckedIndexedAccess 下 Record 取下标可能是 undefined，所以这里用可选链
+const commandK = computed(() => keys['Meta+K']?.value || keys['Ctrl+K']?.value);
+watch(commandK, (pressed) => {
+  if (pressed) toggleSearch();
+});
+
+// ==================== 搜索 ====================
 watch(isShowSearch, (val) => {
   if (val) {
     document.addEventListener('keydown', keyboardOperation);
@@ -63,15 +97,6 @@ watch(isShowSearch, (val) => {
     document.removeEventListener('keydown', keyboardOperation);
   }
 });
-
-const handleOpen = () => {
-  isShowSearch.value = true;
-  nextTick(() => {
-    setTimeout(() => {
-      menuInputRef.value?.focus();
-    });
-  });
-};
 
 const searchList = ref<Menu.MenuOptions[]>([]);
 const updateSearchList = () => {
@@ -169,10 +194,6 @@ const handleClickMenu = () => {
 
     .menu-title {
       font-size: 14px;
-    }
-
-    .menu-enter {
-      font-size: 17px;
     }
   }
 

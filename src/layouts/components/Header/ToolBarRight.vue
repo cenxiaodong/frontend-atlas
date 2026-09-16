@@ -10,10 +10,8 @@
       <el-tooltip content="中英文切换" placement="bottom">
         <Language />
       </el-tooltip>
-      <!-- 搜索菜单 -->
-      <el-tooltip content="搜索菜单" placement="bottom">
-        <SearchMenu />
-      </el-tooltip>
+      <!-- 搜索菜单（提示与快捷键由组件自己处理） -->
+      <SearchMenu />
       <!-- 全屏 -->
       <el-tooltip content="全屏" placement="bottom">
         <Fullscreen />

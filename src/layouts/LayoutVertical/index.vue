@@ -13,7 +13,9 @@
       <div class="aside-box">
         <div class="logo flx-center">
           <img src="/logo.svg" class="logo-img" alt="logo" />
-          <span v-show="!isCollapse" class="logo-text">{{ APP_TITLE }}</span>
+          <span v-show="!isCollapse || isMobileMenuOpen" class="logo-text" :style="{ fontSize: isMobileMenuOpen ? '18px' : '22px' }">{{
+            APP_TITLE
+          }}</span>
         </div>
         <el-scrollbar>
           <el-menu
@@ -211,9 +213,7 @@ provide('toggleSidebar', toggleSidebar);
 
         .logo-text {
           margin-left: 6px;
-          font-size: 21.5px;
-
-          // font-weight: bold;
+          font-weight: 500;
           color: var(--el-aside-logo-text-color);
           white-space: nowrap;
         }

@@ -22,21 +22,21 @@ import '@/styles/element.scss';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 // svg icons
 import 'virtual:svg-icons-register';
-// reset
-import '@/styles/reset.scss';
 // pinia
 import pinia from './stores';
 // vue i18n
 import I18n from '@/languages/index';
 // directives
 import directives from '@/directives/index.ts';
+// errorHandler
+import errorHandler from '@/utils/errorHandler';
 
 const app = createApp(App);
 
 // 注册全局组件
 registerGlobalComponents(app);
 // 全局错误处理配置
-// app.config.errorHandler = errorHandler;
+app.config.errorHandler = errorHandler;
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
