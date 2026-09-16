@@ -19,7 +19,7 @@
             :router="false"
             :default-active="activeMenu"
             :collapse="isMobileMenuOpen ? false : isCollapse"
-            :unique-opened="true"
+            :unique-opened="accordion"
             :collapse-transition="false"
           >
             <SubMenu :menu-list="menuList" />
@@ -75,6 +75,7 @@ const isRouterShow = ref(true);
 // ==================== 计算属性 ====================
 const device = computed(() => globalStore.device);
 const isCollapse = computed(() => globalStore.isCollapse);
+const accordion = computed(() => globalStore.accordion);
 
 const menuList = computed(() => authStore.showMenuListGet);
 const activeMenu = computed(() => (route.meta.activeMenu ?? route.path) as string);

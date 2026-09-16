@@ -85,6 +85,7 @@ const tabsDrop = () => {
     onEnd({ newIndex, oldIndex }) {
       const tabsList = [...tabStore.tabsMenuList];
       const currRow = tabsList.splice(oldIndex as number, 1)[0];
+      if (!currRow) return;
       tabsList.splice(newIndex as number, 0, currRow);
       tabStore.setTabs(tabsList);
     },

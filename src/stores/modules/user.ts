@@ -18,5 +18,5 @@ export const useUserStore = defineStore('atlas-user', {
       this.userInfo = userInfo;
     },
   },
-  persist: piniaPersistConfig({ key: 'atlas-user' }),
+  persist: piniaPersistConfig<UserState>({ key: 'atlas-user' }),
 });

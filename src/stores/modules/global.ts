@@ -56,5 +56,5 @@ export const useGlobalStore = defineStore('atlas-global', {
       });
     },
   },
-  persist: piniaPersistConfig({ key: 'atlas-global', omit: ['isMobileMenuOpen'] }),
+  persist: piniaPersistConfig<GlobalState>({ key: 'atlas-global', omit: ['isMobileMenuOpen'] }),
 });

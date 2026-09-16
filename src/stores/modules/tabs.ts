@@ -42,7 +42,8 @@ export const useTabsStore = defineStore('atlas-tabs', {
     async closeTabsOnSide(path: string, type: 'left' | 'right') {
       const currentIndex = this.tabsMenuList.findIndex((item: TabsMenuProps) => item.path === path);
       if (currentIndex !== -1) {
-        const range = type === 'left' ? [0, currentIndex] : [currentIndex + 1, this.tabsMenuList.length];
+        // 声明成元组，否则 noUncheckedIndexedAccess 下 range[0] / range[1] 会被推断为 number | undefined
+        const range: [number, number] = type === 'left' ? [0, currentIndex] : [currentIndex + 1, this.tabsMenuList.length];
         this.tabsMenuList = this.tabsMenuList.filter((item: TabsMenuProps, index: number) => {
           return index < range[0] || index >= range[1] || !item.close;
         });
@@ -71,5 +72,5 @@ export const useTabsStore = defineStore('atlas-tabs', {
       });
     },
   },
-  persist: piniaPersistConfig({ key: 'atlas-tabs' }),
+  persist: piniaPersistConfig<TabsState>({ key: 'atlas-tabs' }),
 });
