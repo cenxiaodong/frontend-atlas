@@ -7,12 +7,13 @@
         openSidebar: isMobileMenuOpen,
       },
     ]"
+    :style="{ '--layout-main-left': mainMarginLeft }"
   >
     <el-aside :style="{ width: asideWidth }">
       <div class="aside-box">
         <div class="logo flx-center">
           <img src="/logo.svg" class="logo-img" alt="logo" />
-          <span v-show="!isCollapse" class="logo-text">前端图鉴</span>
+          <span v-show="!isCollapse" class="logo-text">{{ APP_TITLE }}</span>
         </div>
         <el-scrollbar>
           <el-menu
@@ -48,7 +49,7 @@
 <script setup lang="ts">
 import { computed, provide, ref, onBeforeUnmount, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { MOBILE_WIDTH } from '@/config';
+import { APP_TITLE, MOBILE_WIDTH } from '@/config';
 import { useDebounceFn } from '@vueuse/core';
 import { useAuthStore } from '@/stores/modules/auth';
 import { useGlobalStore } from '@/stores/modules/global';
@@ -204,14 +205,15 @@ provide('toggleSidebar', toggleSidebar);
         height: var(--layout-header-height);
 
         .logo-img {
-          width: 28px;
+          width: 31px;
           object-fit: contain;
         }
 
         .logo-text {
           margin-left: 6px;
           font-size: 21.5px;
-          font-weight: bold;
+
+          // font-weight: bold;
           color: var(--el-aside-logo-text-color);
           white-space: nowrap;
         }

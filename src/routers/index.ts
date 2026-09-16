@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router
 import { useAuthStore } from '@/stores/modules/auth';
 import { useUserStore } from '@/stores/modules/user';
 import { initDynamicRouter } from '@/routers/modules/dynamicRouter';
-import { LOGIN_URL, ROUTER_WHITE_LIST } from '@/config/index';
+import { APP_TITLE, LOGIN_URL, ROUTER_WHITE_LIST } from '@/config/index';
 import { staticRouter, errorRouter } from '@/routers/modules/staticRouter';
 
 import NProgress from 'nprogress';
@@ -43,7 +43,7 @@ router.beforeEach(async (to, from) => {
   NProgress.start();
 
   // 动态设置标题
-  const title = import.meta.env.VITE_APP_TITLE;
+  const title = APP_TITLE;
   document.title = to.meta.title ? `${to.meta.title} - ${title}` : title;
   // 判断是访问登陆页，有 Token 就在当前页面，没有 Token 重置路由到登陆页
   if (to.path.toLocaleLowerCase() === LOGIN_URL) {

@@ -1,5 +1,12 @@
 // 全局默认配置项
 
+// 应用名称，统一从 .env 读取，改项目名时只需要改 .env
+// 中文名：浏览器标签、PWA、侧边栏 logo 文案
+export const APP_TITLE: string = import.meta.env.VITE_APP_TITLE;
+
+// 英文名：登录页品牌区、页脚等处
+export const APP_TITLE_EN: string = import.meta.env.VITE_APP_TITLE_EN;
+
 // 首页地址（默认）
 // export const HOME_URL: string = '/403';
 export const HOME_URL: string = '/home/index';

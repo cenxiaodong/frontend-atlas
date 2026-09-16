@@ -10,7 +10,7 @@
         <img src="https://img.shields.io/badge/Pinia-3-ffd859" />
       </div>
       <span class="text">
-        <el-link type="primary" href="https://github.com/cenxiaodong/frontend-atlas" target="_blank">Frontend Atlas(前端图鉴)</el-link>
+        <el-link type="primary" href="https://github.com/cenxiaodong/frontend-atlas" target="_blank">{{ APP_TITLE_EN }}({{ APP_TITLE }})</el-link>
         是一个个人自用的前端知识/能力整合项目：把日常反复用到的工程能力（权限、请求、主题、图标、错误页、PWA……）沉淀成一套开箱即用的后台底座，同时把脚手架、通用组件和踩坑记录集中整理，需要时随手就能查到。
       </span>
     </div>
@@ -78,6 +78,7 @@
 const { pkg, lastBuildTime } = __APP_INFO__;
 const { dependencies, devDependencies, version } = pkg;
 import { computed } from 'vue';
+import { APP_TITLE, APP_TITLE_EN } from '@/config';
 import { useWindowSize } from '@vueuse/core';
 
 const { width } = useWindowSize();

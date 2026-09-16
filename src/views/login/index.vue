@@ -25,8 +25,8 @@
             </svg>
           </span>
           <div class="brand-name">
-            <b>Frontend Atlas</b>
-            <span>前端图鉴</span>
+            <b>{{ APP_TITLE_EN }}</b>
+            <span>{{ APP_TITLE }}</span>
           </div>
         </div>
 
@@ -38,7 +38,7 @@
           <p class="brand-desc">脚手架、通用组件与踩坑记录，沉淀成随时查阅、随取随用的前端知识图鉴。</p>
         </div>
 
-        <p class="brand-foot">© 2026 Frontend Atlas · 让前端知识有迹可循</p>
+        <p class="brand-foot">© 2026 {{ APP_TITLE_EN }} · 让前端知识有迹可循</p>
       </aside>
 
       <!-- 右侧表单区 -->
@@ -153,7 +153,7 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Lock, User } from '@element-plus/icons-vue';
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus';
-import { HOME_URL } from '@/config';
+import { APP_TITLE, APP_TITLE_EN, HOME_URL } from '@/config';
 import { useUserStore } from '@/stores/modules/user';
 import { initDynamicRouter } from '@/routers/modules/dynamicRouter';
 // import { loginApi } from '@/api/modules/login';

@@ -15,7 +15,7 @@ import type { PersistConfig } from '@/stores/interface/index';
  * defineStore 会把整个 store 的 state 推断成 StateTree（任意键都是 any），
  * 于是所有 state 属性失去类型和编辑器补全，且不会报错。
  * */
-const piniaPersistConfig = <S extends StateTree>({ key, storage = localStorage, pick, omit }: PersistConfig): PersistenceOptions<S> =>
+const piniaPersistConfig = <S extends StateTree>({ key, storage = localStorage, pick, omit }: PersistConfig<S>): PersistenceOptions<S> =>
   ({ key, storage, pick, omit }) as PersistenceOptions<S>;
 
 export default piniaPersistConfig;

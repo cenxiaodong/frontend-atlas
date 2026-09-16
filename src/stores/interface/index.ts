@@ -1,3 +1,5 @@
+import type { StateTree } from 'pinia';
+
 export type LayoutType = 'vertical' | 'classic' | 'transverse' | 'columns';
 
 export type AssemblySizeType = 'large' | 'default' | 'small';
@@ -64,9 +66,11 @@ export interface KeepAliveState {
 }
 
 /* piniaPersistConfig */
-export interface PersistConfig {
+// pick / omit 只能填当前 store 里真实存在的字段名，写错会被 TS 标红。
+// 注意：只认顶层字段，插件支持的 'userInfo.name' 这种嵌套路径这里没有放开。
+export interface PersistConfig<S extends StateTree> {
   key: string;
   storage?: Storage;
-  pick?: string[];
-  omit?: string[];
+  pick?: (keyof S)[];
+  omit?: (keyof S)[];
 }
