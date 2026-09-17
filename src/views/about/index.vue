@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card mb10">
-      <div class="flx-center mb10"><img src="/logo.png" width="60" alt="Frontend Atlas" /></div>
+      <div class="flx-center mb10"><Logo style="width: 60px" /></div>
       <div class="badge-box flx-center mb10">
         <img src="https://img.shields.io/badge/Vue-3.6-42b883" />
         <img src="https://img.shields.io/badge/Vite-8-646cff" />
@@ -80,6 +80,7 @@ const { dependencies, devDependencies, version } = pkg;
 import { computed } from 'vue';
 import { APP_TITLE, APP_TITLE_EN } from '@/config';
 import { useWindowSize } from '@vueuse/core';
+import Logo from '@/components/Logo/index.vue';
 
 const { width } = useWindowSize();
 

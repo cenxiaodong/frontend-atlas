@@ -12,7 +12,7 @@
     <el-aside :style="{ width: asideWidth }">
       <div class="aside-box">
         <div class="logo flx-center">
-          <img src="/logo.svg" class="logo-img" alt="logo" />
+          <Logo class="logo-img" />
           <span v-show="!isCollapse || isMobileMenuOpen" class="logo-text" :style="{ fontSize: isMobileMenuOpen ? '18px' : '22px' }">{{
             APP_TITLE
           }}</span>
@@ -60,6 +60,7 @@ import Tabs from '@/layouts/components/Tabs/index.vue';
 import ToolBarLeft from '@/layouts/components/Header/ToolBarLeft.vue';
 import ToolBarRight from '@/layouts/components/Header/ToolBarRight.vue';
 import SubMenu from '@/layouts/components/Menu/SubMenu.vue';
+import Logo from '@/components/Logo/index.vue';
 
 // ==================== 常量 ====================
 // 侧边栏宽度引用 src/styles/layout.scss 里的变量，数值只有一个来源
@@ -208,7 +209,6 @@ provide('toggleSidebar', toggleSidebar);
 
         .logo-img {
           width: 31px;
-          object-fit: contain;
         }
 
         .logo-text {

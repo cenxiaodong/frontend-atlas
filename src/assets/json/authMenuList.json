@@ -16,6 +16,37 @@
       }
     },
     {
+      "path": "/toolbox/index",
+      "name": "toolbox",
+      "component": "/toolbox/index",
+      "meta": {
+        "icon": "Tools",
+        "title": "工具箱",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/toolbox/detail/:key",
+          "name": "toolboxDetail",
+          "component": "/toolbox/detail",
+          "meta": {
+            "icon": "Tools",
+            "title": "工具详情",
+            "isLink": "",
+            "isHide": true,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true,
+            "activeMenu": "/toolbox/index"
+          }
+        }
+      ]
+    },
+    {
       "path": "/auth",
       "name": "auth",
       "redirect": "/auth/menu",

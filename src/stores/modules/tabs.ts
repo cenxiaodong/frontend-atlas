@@ -73,6 +73,12 @@ export const useTabsStore = defineStore('atlas-tabs', {
         if (item.path == getUrlWithParams()) item.title = title;
       });
     },
+    // 详情页路由的 meta.title 是通用的（如「工具详情」），进来后按 path 覆盖成具体标题
+    async setTabTitle(path: string, title: string) {
+      this.tabsMenuList.forEach((item: TabsMenuProps) => {
+        if (item.path === path) item.title = title;
+      });
+    },
   },
   persist: piniaPersistConfig<TabsState>({ key: 'atlas-tabs' }),
 });
